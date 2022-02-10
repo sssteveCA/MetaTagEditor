@@ -1,6 +1,11 @@
 <?php
 
 interface Constants{
+
+    //Bootstrap path
+    const BS_CSS_PATH = "/bootstrap-5.1.3-dist/css/bootstrap.min.css";
+    const BS_JS_PATH = "/bootstrap-5.1.3-dist/js/bootstrap.min.js";
+
     //Name of database table(without prefix)
     const TABLE_NAME = "meta_tag_editor";
     const LOG_FILE = ABSPATH."/log.txt";

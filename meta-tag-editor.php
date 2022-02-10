@@ -18,6 +18,8 @@ require_once('interfaces/constants.php');
 require_once('interfaces/html.php');
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 
+$home = get_home_url();
+
 //When plugin is activated
 register_activation_hook(__FILE__, 'mte_activator');
 
@@ -37,6 +39,21 @@ function mte_activator(){
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 SQL;
     dbDelta($sql);
+}
+
+//Insert script to use bootstrap in control panel
+add_action('admin_enqueue_scripts','mte_enqueue_scripts');
+
+function mte_enqueue_scripts(){
+    global $home;
+    $bsCss = $home.C::BS_CSS_PATH;
+    $bsJs = $home.C::BS_JS_PATH;
+    $metaTagCss = plugins_url().'/meta-tag-editor/css/meta-tag-style.css';
+    //file_put_contents(C::LOG_FILE,$bsJs."\r\n",FILE_APPEND);
+    wp_enqueue_style('bootstrapCss',$bsCss,array(),null);
+    wp_enqueue_style('bootstrapJs',$bsJs,array(),null);
+    wp_enqueue_style('metaTagStyle',$metaTagCss,array(),null);
+
 }
 
 //Print the menu in control panel
