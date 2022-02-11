@@ -34,13 +34,14 @@ function mte_activator(){
         $table_name = $wpdb->prefix.C::TABLE_NAME;
         $sql = <<<SQL
 CREATE TABLE `{$table_name}` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`page_id` int(11) NOT NULL COMMENT '//unique id of the page',
-`canonical_url` varchar(1000) DEFAULT NULL,
-`title` varchar(100) NOT NULL,
-`meta_tags` varchar(10000) NOT NULL COMMENT '//custom meta tags edited from user',
-PRIMARY KEY (`id`),
-UNIQUE KEY `page_id` (`page_id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_id` int(11) NOT NULL COMMENT '//unique id of the page',
+  `canonical_url` varchar(1000) DEFAULT NULL COMMENT '<link rel="canonical" href="%s">',
+  `title` varchar(100) DEFAULT NULL COMMENT '<title>%s</title>',
+  `meta_description` varchar(1000) DEFAULT NULL COMMENT '<meta name="description" content="%s">',
+  `robots` varchar(200) DEFAULT NULL COMMENT '<meta name="robots" content="%s">',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `page_id` (`page_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 SQL;
         dbDelta($sql);
@@ -80,14 +81,28 @@ function mte_main_menu(){
 
 //Yoast SEO meta tags filters
 
-add_filter('wpseo_metadesc','mte_edit_description',10,1);
+add_filter('wpseo_canonical','mte_edit_canonical');
+function mte_edit_canonical($canonical){
+    file_put_contents(C::LOG_FILE,"mte_edit_canonical\r\n",FILE_APPEND);
+    file_put_contents(C::LOG_FILE,"Canonical => {$canonical}\r\n",FILE_APPEND);
+    return $canonical;
+}
+
+add_filter('wpseo_metadesc','mte_edit_description');
 function mte_edit_description($description){
     file_put_contents(C::LOG_FILE,"mte_edit_description\r\n",FILE_APPEND);
     file_put_contents(C::LOG_FILE,"Descrizione => {$description}\r\n",FILE_APPEND);
     return $description;
 }
 
-add_filter('wpseo_tile','mte_edit_title',10,1);
+add_filter('wpseo_robots','mte_edit_robots');
+function mte_edit_robots($robots){
+    file_put_contents(C::LOG_FILE,"mte_edit_robots\r\n",FILE_APPEND);
+    file_put_contents(C::LOG_FILE,"Robots => {$robots}\r\n",FILE_APPEND);
+    return $robots;
+}
+
+add_filter('wpseo_tile','mte_edit_title');
 function mte_edit_title($title){
     file_put_contents(C::LOG_FILE,"mte_edit_title\r\n",FILE_APPEND);
     file_put_contents(C::LOG_FILE,"Titolo => {$title}\r\n",FILE_APPEND);
