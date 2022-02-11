@@ -63,7 +63,6 @@ function mte_enqueue_scripts(){
     wp_enqueue_style('bootstrapCss',$bsCss,array(),null);
     wp_enqueue_style('bootstrapJs',$bsJs,array(),null);
     wp_enqueue_style('metaTagStyle',$metaTagCss,array(),null);
-
 }
 
 //Print the menu in control panel
@@ -77,5 +76,21 @@ function mte_menu(){
 function mte_main_menu(){
     //file_put_contents(C::LOG_FILE,H::MAIN_MENU."\r\n",FILE_APPEND);
     echo H::MAIN_MENU;
+}
+
+//Yoast SEO meta tags filters
+
+add_filter('wpseo_metadesc','mte_edit_description',10,1);
+function mte_edit_description($description){
+    file_put_contents(C::LOG_FILE,"mte_edit_description\r\n",FILE_APPEND);
+    file_put_contents(C::LOG_FILE,"Descrizione => {$description}\r\n",FILE_APPEND);
+    return $description;
+}
+
+add_filter('wpseo_tile','mte_edit_title',10,1);
+function mte_edit_title($title){
+    file_put_contents(C::LOG_FILE,"mte_edit_title\r\n",FILE_APPEND);
+    file_put_contents(C::LOG_FILE,"Titolo => {$title}\r\n",FILE_APPEND);
+    return $title;
 }
 ?>
