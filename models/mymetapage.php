@@ -41,7 +41,20 @@ class MyMetaPage implements MmpErrors, Constants{
 
     public function getCanonicalUrl(){return $this->canonical_url;}
     public function getErrno(){return $this->errno;}
-    public function getError(){return $this->error;}
+    public function getError(){
+        switch($this->errno){
+            case Mmp::ERR_MISSEDREQPARAMS:
+                $this->error = Mmp::MSG_MISSEDREQPARAMS;
+                break;
+            case Mmp::ERR_NORESULTS:
+                $this->error = Mmp::MSG_NORESULTS;
+                break;
+            default:
+                $this->error = null;
+                break;
+        }
+        return $this->error;
+    }
     public function getId(){return $this->id;}
     public function getMetaDescription(){return $this->meta_description;}
     public function getPageId(){return $this->page_id;}
@@ -56,10 +69,65 @@ class MyMetaPage implements MmpErrors, Constants{
         $this->query = <<<SQL
 SHOW TABLES LIKE `{$this->table}`;
 SQL;
+        $this->queries[] = $this->query;
         $table = $this->wpdb->get_var($this->query);
         if($table != null)$exists = true;
         else $exists = false;
         return $exists;
+    }
+
+    //retrieve a row with meta tags by specifing primary key
+    public function getMetaById(){
+        $ok = false; //true if operations have success
+        $this->errno = 0;
+        if(isset($this->id)){
+            $this->query = <<<SQL
+SELECT * FROM `{$this->table}` WHERE `id` = '{$this->id}';
+SQL;
+            $this->queries[] = $this->query;
+            $metas = $this->wpdb->get_row($this->query);
+            if($metas != null){
+                //Results found
+                $this->page_id = $metas->page_id;
+                $this->canonical_url = $metas->canonical_url;
+                $this->title = $metas->title;
+                $this->meta_description = $metas->meta_description;
+                $this->robots = $metas->robots;
+                $ok = true;
+            }//if($metas != null){
+            else
+                $this->errno = Mmp::ERR_NORESULTS;
+        }//if(isset($this->id)){
+        else
+            $this->errno = Mmp::ERR_MISSEDREQPARAMS;
+        return $ok;
+    }
+
+    //retrieve a row with meta tags by specifing unique page id
+    public function getMetaByPageId(){
+        $ok = false; //true if operations have success
+        $this->errno = 0;
+        if(isset($this->page_id)){
+            $this->query = <<<SQL
+SELECT * FROM `{$this->table}` WHERE `page_id` = '{$this->page_id}';
+SQL;
+            $this->queries[] = $this->query;
+            $metas = $this->wpdb->get_row($this->query);
+            if($metas != null){
+                //Results found
+                $this->id = $metas->id;
+                $this->canonical_url = $metas->canonical_url;
+                $this->title = $metas->title;
+                $this->meta_description = $metas->meta_description;
+                $this->robots = $metas->robots;
+                $ok = true;
+            }//if($metas != null){
+            else
+            $this->errno = Mmp::ERR_NORESULTS;
+        }//if(isset($this->page_id)){
+        else
+        $this->errno = Mmp::ERR_MISSEDREQPARAMS;
+        return $ok;
     }
 }
 ?>
