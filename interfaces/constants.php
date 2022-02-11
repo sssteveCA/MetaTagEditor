@@ -17,5 +17,11 @@ interface Constants{
     const MENU_SLUG = 'meta-tag-editor';
     const MENU_POSITION = 1;
 
+    //Plugin relative paths
+    const PLUGIN_DIR = "/meta-tag-editor";
+    const PLUGIN_CSS_PATH1 = Constants::PLUGIN_DIR."/css/meta-tag-style.css";
+    const PLUGIN_MAIN_FILE = Constants::PLUGIN_DIR."meta-tag-editor.php";
+    const PLUGIN_YOASTSEO_FILE = "/wordpress-seo/wp-seo.php";
+
 }
 ?>
