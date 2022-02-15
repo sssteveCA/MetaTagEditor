@@ -1,5 +1,7 @@
 <?php
 
+namespace MetaTagEditor\Interfaces;
+
 //This interface contains string messages of the plugin
 interface Messages{
     //Errors

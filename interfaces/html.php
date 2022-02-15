@@ -1,5 +1,7 @@
 <?php
 
+namespace MetaTagEditor\Interfaces;
+
 //This interface contains HTML code constants
 interface Html{
     const MAIN_MENU = <<<HTML

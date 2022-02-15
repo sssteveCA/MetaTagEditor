@@ -17,11 +17,12 @@ require_once('interfaces/html.php');
 require_once('interfaces/messages.php');
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 
-use Constants as C;
-use Html as H;
-use Messages as M;
+use MetaTagEditor\Interfaces\Constants as C;
+use MetaTagEditor\Interfaces\Html as H;
+use MetaTagEditor\Interfaces\Messages as M;
 
 $home = get_home_url();
+$plugin_url = plugins_url();
 
 //When plugin is activated
 register_activation_hook(__FILE__, 'mte_activator');
@@ -56,14 +57,16 @@ SQL;
 add_action('admin_enqueue_scripts','mte_enqueue_scripts');
 
 function mte_enqueue_scripts(){
-    global $home;
+    global $home,$plugin_url;
     $bsCss = $home.C::BS_CSS_PATH;
     $bsJs = $home.C::BS_JS_PATH;
-    $metaTagCss = plugins_url().C::PLUGIN_CSS_PATH1;
+    $metaTagCss = $plugin_url.C::PLUGIN_CSS_PATH1;
+    $metaTagJs = $plugin_url.C::PLUGIN_JS_PATH1;
     //file_put_contents(C::LOG_FILE,$bsJs."\r\n",FILE_APPEND);
     wp_enqueue_style('bootstrapCss',$bsCss,array(),null);
     wp_enqueue_style('bootstrapJs',$bsJs,array(),null);
     wp_enqueue_style('metaTagStyle',$metaTagCss,array(),null);
+    wp_enqueue_script('metaTagJs',$metaTagJs,array(),null);
 }
 
 //Print the menu in control panel

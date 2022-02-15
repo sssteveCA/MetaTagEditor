@@ -1,10 +1,16 @@
 <?php
 
+namespace MetaTagEditor\Interfaces;
+
 interface Constants{
 
+    //ajax URL
+    const AJAX_GETMETA = Constants::PLUGIN_DIR."/php/ajax/getmeta.php"; //Get all pages meta from database
+
     //Bootstrap path
-    const BS_CSS_PATH = "/bootstrap-5.1.3-dist/css/bootstrap.min.css";
-    const BS_JS_PATH = "/bootstrap-5.1.3-dist/js/bootstrap.min.js";
+    const BS_CSS_PATH = Constants::BS_VERSION."/css/bootstrap.min.css";
+    const BS_JS_PATH = Constants::BS_VERSION."/js/bootstrap.min.js";
+    const BS_VERSION = "/bootstrap-5.0.2-dist";
 
     //Name of database table(without prefix)
     const TABLE_NAME = "meta_tag_editor";
@@ -20,8 +26,9 @@ interface Constants{
     //Plugin relative paths
     const PLUGIN_DIR = "/meta-tag-editor";
     const PLUGIN_CSS_PATH1 = Constants::PLUGIN_DIR."/css/meta-tag-style.css";
-    const PLUGIN_MAIN_FILE = Constants::PLUGIN_DIR."meta-tag-editor.php";
-    const PLUGIN_YOASTSEO_FILE = "/wordpress-seo/wp-seo.php";
+    const PLUGIN_JS_PATH1 = Constants::PLUGIN_DIR."/js/main.php";
+    const PLUGIN_MAIN_FILE = Constants::PLUGIN_DIR."/meta-tag-editor.php";
+    const PLUGIN_YOASTSEO_FILE = "wordpress-seo/wp-seo.php";
 
 }
 ?>
