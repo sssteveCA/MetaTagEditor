@@ -39,5 +39,8 @@ interface Constants{
     const PLUGIN_MAIN_FILE = Constants::PLUGIN_DIR."/meta-tag-editor.php";
     const PLUGIN_YOASTSEO_FILE = "wordpress-seo/wp-seo.php";
 
+    //Yoast 
+    const YOAST_RESTAPI_URL = "https://yoast.com/wp-json/yoast/v1/get_head?url=";
+
 }
 ?>

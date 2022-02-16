@@ -31,6 +31,7 @@ class MyMetaPage implements Mmp, C{
             throw new \Exception(Mmp::MSG_TABLENOTEXISTS);
         }
         $this->id = isset($dati['id']) ? $dati['id'] : null;
+        $this->canonical_url = isset($dati["canonical_url"]) ? $dati["canonical_url"] : null;
         $this->meta_description = isset($dati['meta_description']) ? $dati['meta_description'] : null;
         $this->page_id = isset($dati['page_id']) ? $dati['page_id'] : null;
         $this->robots = isset($dati['robots']) ? $dati['robots'] : null;
@@ -69,7 +70,7 @@ class MyMetaPage implements Mmp, C{
     private function tableExists(){
         $exists = false;
         $this->query = <<<SQL
-SHOW TABLES LIKE `{$this->table}`;
+SHOW TABLES LIKE '{$this->table}';
 SQL;
         $this->queries[] = $this->query;
         $table = $this->wpdb->get_var($this->query);
@@ -125,10 +126,32 @@ SQL;
                 $ok = true;
             }//if($metas != null){
             else
-            $this->errno = Mmp::ERR_NORESULTS;
+                $this->errno = Mmp::ERR_NORESULTS;
         }//if(isset($this->page_id)){
         else
-        $this->errno = Mmp::ERR_MISSEDREQPARAMS;
+            $this->errno = Mmp::ERR_MISSEDREQPARAMS;
+        return $ok;
+    }
+
+    //get meta tags of page from Yoast Server
+    public function getMetaByUrlFromYoast(){
+        $ok = false;
+        $this->errno = false;
+        if(isset($this->canonical_url)){
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, C::YOAST_RESTAPI_URL.$this->canonical_url);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+            curl_setopt($ch,CURLOPT_TIMEOUT, 20);
+            curl_setopt($ch,CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch,CURLOPT_MAXREDIRS,10);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            file_put_contents(C::LOG_FILE,"\r\n\r\n{$result}\r\n",FILE_APPEND);
+            $ok = true;
+        }//if(isset($this->canonical_url)){
+        else
+            $this->errno = Mmp::ERR_MISSEDREQPARAMS;
         return $ok;
     }
 }
