@@ -12,9 +12,9 @@
  */
 
 
-require_once('interfaces/constants.php');
-require_once('interfaces/html.php');
-require_once('interfaces/messages.php');
+require_once('php/interfaces/constants.php');
+require_once('php/interfaces/html.php');
+require_once('php/interfaces/messages.php');
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 
 use MetaTagEditor\Interfaces\Constants as C;

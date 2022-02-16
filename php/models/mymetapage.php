@@ -1,5 +1,7 @@
 <?php
 
+namespace MetaTagEditor\Models;
+
 use MetaTagEditor\Interfaces\MmpErrors as Mmp;
 use MetaTagEditor\Interfaces\Constants as C;
 
@@ -26,7 +28,7 @@ class MyMetaPage implements Mmp, C{
         $this->table = isset($dati['table']) ? $this->wpdb->prefix.$dati['table'] : $this->wpdb->prefix.C::TABLE_NAME;
         if(!$this->tableExists()){
             //table specified doesn't exists
-            throw new Exception(Mmp::MSG_TABLENOTEXISTS);
+            throw new \Exception(Mmp::MSG_TABLENOTEXISTS);
         }
         $this->id = isset($dati['id']) ? $dati['id'] : null;
         $this->meta_description = isset($dati['meta_description']) ? $dati['meta_description'] : null;
