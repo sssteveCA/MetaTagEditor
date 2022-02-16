@@ -139,7 +139,7 @@ SQL;
         $this->errno = false;
         if(isset($this->canonical_url)){
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, C::YOAST_RESTAPI_URL.$this->canonical_url);
+            curl_setopt($ch, CURLOPT_URL, get_home_url().C::YOAST_RESTAPI_URL.$this->canonical_url);
             curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
             curl_setopt($ch,CURLOPT_TIMEOUT, 20);
@@ -147,7 +147,11 @@ SQL;
             curl_setopt($ch,CURLOPT_MAXREDIRS,10);
             $result = curl_exec($ch);
             curl_close($ch);
-            file_put_contents(C::LOG_FILE,"\r\n\r\n{$result}\r\n",FILE_APPEND);
+            $json = json_decode($result,true,100,JSON_THROW_ON_ERROR);
+            //file_put_contents(C::LOG_FILE,"\r\n\r\n".var_export($json["json"],true)."\r\n",FILE_APPEND);
+            $this->robots = implode(",",$json["json"]["robots"]);
+            $this->meta_description = $json["json"]["og_description"];
+            $this->title = $json["json"]["og_title"];
             $ok = true;
         }//if(isset($this->canonical_url)){
         else
