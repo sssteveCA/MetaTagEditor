@@ -1,5 +1,7 @@
 <?php
 
+namespace MetaTagEditor\Interfaces;
+
 //This interface contains constants and message of MyMetaPage errors codes class
 interface MmpErrors{
     //constants

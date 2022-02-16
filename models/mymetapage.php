@@ -1,10 +1,10 @@
 <?php
 
-use MmpErrors as Mmp;
-use Constants as C;
+use MetaTagEditor\Interfaces\MmpErrors as Mmp;
+use MetaTagEditor\Interfaces\Constants as C;
 
 //This model communicate with mySql table of pages that have custom meta tags edited by the plugin
-class MyMetaPage implements MmpErrors, Constants{
+class MyMetaPage implements Mmp, C{
 
     private $canonical_url; //href of link rel canonical
     private $errno; //error code
