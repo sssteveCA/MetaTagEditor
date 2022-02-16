@@ -15,6 +15,13 @@ interface Constants{
     //Name of database table(without prefix)
     const TABLE_NAME = "meta_tag_editor";
     const LOG_FILE = ABSPATH."/log.txt";
+
+    //Script handles
+    const H_BS_CSS = "bootstrapCss";
+    const H_BS_JS = "bootstrapJs";
+    const H_CSS1 = "metaTagStyle";
+    const H_JS1 = "metaTagJs";
+    const H_JS_MYHTTP = "metaTagJsMyHttp";
     
     //menu
     const MENU_TITLE = "Modifica meta tag";
@@ -27,6 +34,8 @@ interface Constants{
     const PLUGIN_DIR = "/meta-tag-editor";
     const PLUGIN_CSS_PATH1 = Constants::PLUGIN_DIR."/css/meta-tag-style.css";
     const PLUGIN_JS_PATH1 = Constants::PLUGIN_DIR."/js/main.php";
+    const PLUGIN_JS_MYHTTP = Constants::PLUGIN_DIR."/js/client/myhttp.php";
+    const PLUGIN_JS_MYHTTP_MODULE = Constants::PLUGIN_DIR."/js/client/myhttp";
     const PLUGIN_MAIN_FILE = Constants::PLUGIN_DIR."/meta-tag-editor.php";
     const PLUGIN_YOASTSEO_FILE = "wordpress-seo/wp-seo.php";
 

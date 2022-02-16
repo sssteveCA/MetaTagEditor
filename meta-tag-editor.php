@@ -61,17 +61,18 @@ function mte_enqueue_scripts(){
     $bsCss = $home.C::BS_CSS_PATH;
     $bsJs = $home.C::BS_JS_PATH;
     $metaTagCss = $plugin_url.C::PLUGIN_CSS_PATH1;
+    $metaTagJsMyHttp = $plugin_url.C::PLUGIN_JS_MYHTTP;
     $metaTagJs = $plugin_url.C::PLUGIN_JS_PATH1;
     //file_put_contents(C::LOG_FILE,$bsJs."\r\n",FILE_APPEND);
-    wp_enqueue_style('bootstrapCss',$bsCss,array(),null);
-    wp_enqueue_style('bootstrapJs',$bsJs,array(),null);
-    wp_enqueue_style('metaTagStyle',$metaTagCss,array(),null);
-    wp_enqueue_script('metaTagJs',$metaTagJs,array(),null);
+    wp_enqueue_style(C::H_BS_CSS,$bsCss,array(),null);
+    wp_enqueue_style(C::BS_JS_PATH,$bsJs,array(),null);
+    wp_enqueue_style(C::H_CSS1,$metaTagCss,array(),null);
+    wp_enqueue_script(C::H_JS_MYHTTP,$metaTagJsMyHttp,array(),null);
+    wp_enqueue_script(C::H_JS1,$metaTagJs,array(C::H_JS_MYHTTP),null);
 }
 
 //Print the menu in control panel
 add_action('admin_menu','mte_menu');
-
 function mte_menu(){
     add_menu_page(C::MENU_PAGE_TITLE,C::MENU_TITLE,C::MENU_CAPABILITY,C::MENU_SLUG,'mte_main_menu','',C::MENU_POSITION);
 }
@@ -82,8 +83,20 @@ function mte_main_menu(){
     echo H::MAIN_MENU;
 }
 
-//Yoast SEO meta tags filters
+//add tag to <script>
+add_filter('script_loader_tag','mte_add_tags',10,3);
+function mte_add_tags($tag,$handle,$src){
+    file_put_contents(C::LOG_FILE,"mte_add_tags\n",FILE_APPEND);
+    if($handle == C::H_JS_MYHTTP){ //This is Js MyHttp class that must be imported
+        $tag = '<script type="module" src="'.esc_url($src).'"></script>';
+    }//if($handle != ''){
+    if($handle == C::H_JS1){
+        $tag = '<script type="module" src="'.esc_url($src).'"></script>';
+    }
+    return $tag;
+}
 
+//Yoast SEO meta tags filters
 add_filter('wpseo_canonical','mte_edit_canonical');
 function mte_edit_canonical($canonical){
     file_put_contents(C::LOG_FILE,"mte_edit_canonical\r\n",FILE_APPEND);
