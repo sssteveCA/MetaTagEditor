@@ -1,9 +1,5 @@
-<?php 
 
-header("Content-Type","application/javascript");
-//This class is the client for retrieve page meta tags
-$js = <<<JS
-export class MyHttp{
+class MyHttp{
 
     static ERR_URLMISSING; //url required missing
     static ERR_METHODMISSING; //HTTP method missing
@@ -57,18 +53,15 @@ export class MyHttp{
             method : this._method,
             headers : this._headers,
             body : this._params,
-            mode : 'no-cors',
-            cache : 'no-cache',
+            /* mode : 'cors',
+            cache : 'default',
             redirect : 'follow',
-            referrerPolicy : 'no-referrer'
+            referrerPolicy : 'no-referrer'  */
         };
         console.log("myHttp #getResult promise vals");
         console.log(promiseVals);
-        var promise = await fetch(this._url,this._params);
+        var promise = await fetch(this._url,promiseVals);
         return promise.text(); //returns response as text
     }
 }
-JS;
-echo $js;
 
-?>

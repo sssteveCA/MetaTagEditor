@@ -88,10 +88,10 @@ add_filter('script_loader_tag','mte_add_tags',10,3);
 function mte_add_tags($tag,$handle,$src){
     file_put_contents(C::LOG_FILE,"mte_add_tags\n",FILE_APPEND);
     if($handle == C::H_JS_MYHTTP){ //This is Js MyHttp class that must be imported
-        $tag = '<script type="module" src="'.esc_url($src).'"></script>';
+        //$tag = '<script type="module" src="'.esc_url($src).'"></script>';
     }//if($handle != ''){
     if($handle == C::H_JS1){
-        $tag = '<script type="module" src="'.esc_url($src).'"></script>';
+        //$tag = '<script type="module" src="'.esc_url($src).'"></script>';
     }
     return $tag;
 }
