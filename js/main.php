@@ -46,11 +46,12 @@ document.addEventListener('DOMContentLoaded',function(){
                 var pageParsed = page.parseJsonString(result); //parse JSON string and set properties values
                 if(pageParsed){
                     //JSON string parsed successufly
-                    console.log(page.page_id);
+                    /* console.log(page.page_id);
                     console.log(page.canonical_url);
                     console.log(page.title);
                     console.log(page.meta_description);
-                    console.log(page.robots);
+                    console.log(page.robots); */
+                    displayPageValues(page);
                 }
                 else
                     console.log("errore => "+page.errno)

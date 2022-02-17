@@ -21,6 +21,7 @@ interface Constants{
     const H_BS_JS = "bootstrapJs";
     const H_CSS1 = "metaTagStyle";
     const H_JS1 = "metaTagJs";
+    const H_JS_FUNCTIONS1 = "metaTagJsFunctions";
     const H_JS_MYHTTP = "metaTagJsMyHttp";
     const H_JS_PAGE = "metaTagJsPage";
     
@@ -34,9 +35,10 @@ interface Constants{
     //Plugin relative paths
     const PLUGIN_DIR = "/meta-tag-editor";
     const PLUGIN_CSS_PATH1 = Constants::PLUGIN_DIR."/css/meta-tag-style.css";
-    const PLUGIN_JS_PATH1 = Constants::PLUGIN_DIR."/js/main.php";
+    const PLUGIN_JS_FUNCTIONS1 = Constants::PLUGIN_DIR."/js/functions/functions.js";
     const PLUGIN_JS_MYHTTP = Constants::PLUGIN_DIR."/js/client/myhttp.js";
     const PLUGIN_JS_PAGE = Constants::PLUGIN_DIR."/js/models/page.js";
+    const PLUGIN_JS_PATH1 = Constants::PLUGIN_DIR."/js/main.php";
     const PLUGIN_MAIN_FILE = Constants::PLUGIN_DIR."/meta-tag-editor.php";
     const PLUGIN_YOASTSEO_FILE = "wordpress-seo/wp-seo.php";
 
