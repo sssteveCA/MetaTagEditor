@@ -11,19 +11,24 @@ use MetaTagEditor\Models\MyMetaPage;
 $risposta = array();
 $risposta['msg'] = '';
 $risposta['done'] = false;
-$risposta['post'] = $_POST;
+//$risposta['post'] = $_POST;
 
 if(isset($_POST["pageId"]) && is_numeric($_POST["pageId"])){
-    $id = $_POST["pageId"];
-    $url = wp_get_canonical_url($id);
+    $page_id = $_POST["pageId"];
+    $url = wp_get_canonical_url($page_id);
     if($url != false){
-        $risposta["url"] = $url;
+        //$risposta["url"] = $url;
         $dati = array (
-            "id" => $id,
+            "page_id" => $page_id,
             "canonical_url" => $url
         );
         $mmp = new MyMetaPage($dati);
         if($mmp->getMetaByUrlFromYoast()){
+            $risposta["page"]["page_id"] = $mmp->getPageId();
+            $risposta["page"]["canonical_url"] = $mmp->getCanonicalUrl();
+            $risposta["page"]["title"] = $mmp->getTitle();
+            $risposta["page"]["meta_description"] = $mmp->getMetaDescription();
+            $risposta["page"]["robots"] = $mmp->getRobots();
             $risposta["done"] = true;
         }//if($mmp->getMetaByUrlFromYoast()){
         else

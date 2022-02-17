@@ -18,7 +18,8 @@ var method; //HTTP method
 var headers = {}; //HTTP headers
 var params = {}; //HTTP body request
 var response; // HTTP response;
-var mh; //myHttp class instance
+var mh; //MyHttp class instance
+var page; //Page class instance
 var formData; //FormData object
 
 document.addEventListener('DOMContentLoaded',function(){
@@ -39,8 +40,20 @@ document.addEventListener('DOMContentLoaded',function(){
         response = mh.getResponse();
         response
             .then(result => {
+                //get response from ajaxUrl
                 console.log(result);
-                console.log("Errore => "+mh.errno);
+                page = new Page();
+                var pageParsed = page.parseJsonString(result); //parse JSON string and set properties values
+                if(pageParsed){
+                    //JSON string parsed successufly
+                    console.log(page.page_id);
+                    console.log(page.canonical_url);
+                    console.log(page.title);
+                    console.log(page.meta_description);
+                    console.log(page.robots);
+                }
+                else
+                    console.log("errore => "+page.errno)
             })
             .catch(error => {
                 console.warn(error);

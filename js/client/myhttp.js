@@ -1,8 +1,8 @@
 
 class MyHttp{
 
-    static ERR_URLMISSING; //url required missing
-    static ERR_METHODMISSING; //HTTP method missing
+    static ERR_URLMISSING = 1; //url required missing
+    static ERR_METHODMISSING = 2; //HTTP method missing
 
     _url; //Request URL
     _method; //HTTP method
@@ -28,7 +28,7 @@ class MyHttp{
 
     //this method returns an HTTP string response
     getResponse(){
-        console.log("myHttp getResponse");
+        //console.log("myHttp getResponse");
         var response = null;
         this._errno = 0;
         if(this._url !== null){
@@ -58,7 +58,7 @@ class MyHttp{
             redirect : 'follow',
             referrerPolicy : 'no-referrer'  */
         };
-        console.log("myHttp #getResult promise vals");
+        //console.log("myHttp #getResult promise vals");
         console.log(promiseVals);
         var promise = await fetch(this._url,promiseVals);
         return promise.text(); //returns response as text
