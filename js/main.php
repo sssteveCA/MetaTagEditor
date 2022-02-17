@@ -18,6 +18,7 @@ var method; //HTTP method
 var headers = {}; //HTTP headers
 var params = {}; //HTTP body request
 var response; // HTTP response;
+var spinner;
 var mh; //MyHttp class instance
 var page; //Page class instance
 var formData; //FormData object
@@ -37,6 +38,9 @@ document.addEventListener('DOMContentLoaded',function(){
         };
         params =  "pageId="+page_id;
         mh = new MyHttp(ajaxUrl,method,headers,params);
+        //display spinner while waiting the response
+        spinner = document.getElementById('mte_page_value_spinner');
+        spinner.classList.toggle('d-none');
         response = mh.getResponse();
         response
             .then(result => {
@@ -53,6 +57,9 @@ document.addEventListener('DOMContentLoaded',function(){
             })
             .catch(error => {
                 console.warn(error);
+            })
+            .finally(() => {
+                spinner.classList.toggle('d-none');
             });
     };//bt_page_id_show.onclick = function(){
 });
