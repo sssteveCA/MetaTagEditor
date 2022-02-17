@@ -7,31 +7,27 @@ require_once("../php/interfaces/constants.php");
 use MetaTagEditor\Interfaces\Constants as C;
 
 $ajax = plugins_url().C::AJAX_GETMETA;
-//$myHttp = plugins_url().C::PLUGIN_JS_MYHTTP;
 
 $js = <<<JS
-var ajaxUrl = '{$ajax}';
-var in_page_id_show; //Input field for page_id show
-var page_id; //page_id value
-var bt_page_id_show;
-var method; //HTTP method
-var headers = {}; //HTTP headers
-var params = {}; //HTTP body request
-var response; // HTTP response;
-var spinner;
-var mh; //MyHttp class instance
-var page; //Page class instance
-var formData; //FormData object
+let ajaxUrl = '{$ajax}';
+let bt_page_id_show;
+let headers = {}; //HTTP headers
+let in_page_id_show; //Input field for page_id 
+let method; //HTTP method
+let mh; //MyHttp class instance
+let page; //Page class instance
+let page_id; //page_id value
+let params = {}; //HTTP body request
+let response; // HTTP response;
+let spinner;
+
 
 document.addEventListener('DOMContentLoaded',function(){
     in_page_id_show = document.getElementById('mte_page_id_get');
     bt_page_id_show = document.getElementById('mte_btn_show');
-
     bt_page_id_show.onclick = function(){
         //User wants to show meta tags info about a particular page
         page_id = in_page_id_show.value;
-        formData = new FormData();
-        formData.append("pageId",page_id);
         method = 'POST';
         headers = {
             'Content-Type' : 'application/x-www-form-urlencoded'

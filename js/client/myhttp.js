@@ -28,7 +28,6 @@ class MyHttp{
 
     //this method returns an HTTP string response
     getResponse(){
-        //console.log("myHttp getResponse");
         var response = null;
         this._errno = 0;
         if(this._url !== null){
@@ -58,8 +57,6 @@ class MyHttp{
             redirect : 'follow',
             referrerPolicy : 'no-referrer'  */
         };
-        //console.log("myHttp #getResult promise vals");
-        console.log(promiseVals);
         var promise = await fetch(this._url,promiseVals);
         return promise.text(); //returns response as text
     }
