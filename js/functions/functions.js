@@ -1,9 +1,10 @@
 
 //display the values of Page object 
 function displayPageValues(page){
-    var container = document.getElementById('mte_page_values');
+    let container = document.getElementById('mte_page_values');
     container.innerHTML = '';
     if(container){
+        container.classList.add('border','border-secondary');
         //#mte_page_values exists
         var arrLabels = {
             "page_id" : "ID della pagina",
@@ -22,24 +23,26 @@ function displayPageValues(page){
 
         for(var key in arrValues){
             //create a row inside a col class div
-            let div = document.createElement("div");
-                div.setAttribute('id','mte_div_'+key);
-                div.classList.add('row','mb-3');
+            let divRow = document.createElement("div");
+                divRow.setAttribute('id','mte_div_'+key);
+                divRow.classList.add('row','mb-3');
                     //create col div that contains a description of the value
                     let divLabel = document.createElement('div');
-                    divLabel.classList.add('col-12','col-md-5');
-                        //Insert the label string into divLabel
-                        let textLabel = document.createTextNode(arrLabels[key]);
-                        divLabel.append(textLabel);
-                div.appendChild(divLabel);
+                    divLabel.classList.add('col-12','col-md-5','d-md-flex','align-items-md-center');
+                    divLabel.style.fontWeight = 'bold';
+                    divLabel.style.textTransform = 'uppercase';
+                divRow.appendChild(divLabel);
+                    //Insert the label string into divLabel
+                    let textLabel = document.createTextNode(arrLabels[key]);
+                    divLabel.append(textLabel);
                     //create col div that contains the value that corresponds to the description
                     let divValue = document.createElement('div');
-                    divValue.classList.add('col-12','offset-md-1','col-md-5');
+                    divValue.classList.add('col-12','offset-md-1','col-md-5','d-md-flex','align-items-md-center');
                         //Insert the value into divValue
                         let textValue = document.createTextNode(arrValues[key]);
                         divValue.appendChild(textValue);
-                div.appendChild(divValue);
-            container.appendChild(div);
+                divRow.appendChild(divValue);
+            container.appendChild(divRow);
         }//for(var key in arrValues){
     }
     else
