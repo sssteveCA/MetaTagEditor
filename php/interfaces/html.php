@@ -30,13 +30,13 @@ interface Html{
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-sm-4 text-center text-sm-start mb-2">
+                <div class="col-12 col-sm-4 text-center text-sm-start mt-4 mb-2">
                     <input type="number" id="mte_page_id_set" name="page_id_set" placeholder="ID della pagina da modificare">
                 </div>
-                <div class="col-12 col-sm-4 text-center text-sm-end mb-2">
-                    <button id="mte_btn_edit" class="btn btn-primary">MODIFICA</button>
+                <div class="col-12 col-sm-4 text-center text-sm-end mt-4 mb-2">
+                    <button id="mte_btn_edit" class="btn btn-secondary">MODIFICA</button>
                 </div>
-                <div class="col-12 col-sm-2 d-flex justify-content-center">
+                <div class="col-12 col-sm-2 d-flex justify-content-center mt-4">
                     <div id="mte_page_edit_spinner" class="spinner-border d-none" role="status">
                     </div>
                 </div>
@@ -72,6 +72,20 @@ interface Html{
                     </div>
                 </div>
             </div>
+            <!-- Contain input field to delete custom meta page value -->
+            <div class="row">
+                <div class="col-12 col-sm-4 text-center text-sm-start mt-4 mb-2">
+                    <input type="number" id="mte_page_id_delete" name="page_id_delete" placeholder="ID della pagina da cancellare">
+                </div>
+                <div class="col-12 col-sm-4 text-center text-sm-end mt-4 mb-2">
+                    <button id="mte_btn_delete" class="btn btn-danger">ELIMINA</button>
+                </div>
+                <!-- display spinner while waiting meta information of page -->
+                <div class="col-12 col-sm-2 d-flex justify-content-center mt-4">
+                    <div id="mte_page_delete_spinner" class="spinner-border d-none" role="status">
+                    </div>
+                </div>
+            </div> <!-- <div class="row"> -->
         </div>
     </div> <!-- <div class="ms-3 mte_menu_content mt-2"> -->
 </div>

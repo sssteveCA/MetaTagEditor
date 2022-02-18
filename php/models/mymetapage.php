@@ -20,6 +20,15 @@ class MyMetaPage implements Mmp, C{
     private $table; //MySql table used by this class
     private $title; //page <title>
     private $wpdb; //Wordpress database instance
+    //check if properties match with these patterns
+    private static $regex = array(
+        'id' => '^(?!\s*$).+',
+        'page_id' => '^(?!\s*$).+',
+        'canonical_url' => '^(?!\s*$).+',
+        'title' => '^(?!\s*$).+',
+        'meta_description' => '^(?!\s*$).+',
+        'robots' => '^(?!\s*$).+'
+    );
 
     public function __construct($dati)
     {
@@ -66,17 +75,12 @@ class MyMetaPage implements Mmp, C{
     public function getRobots(){return $this->robots;}
     public function getTitle(){return $this->title;}
 
-    //check if MySql table exists before proceed
-    private function tableExists(){
-        $exists = false;
-        $this->query = <<<SQL
-SHOW TABLES LIKE '{$this->table}';
-SQL;
-        $this->queries[] = $this->query;
-        $table = $this->wpdb->get_var($this->query);
-        if($table != null)$exists = true;
-        else $exists = false;
-        return $exists;
+    public function editPageMeta(){
+        $ok = false;
+        if($this->editValidation()){
+            //validation passed
+        }
+        return $ok;
     }
 
     //retrieve a row with meta tags by specifing primary key
@@ -157,6 +161,47 @@ SQL;
         else
             $this->errno = Mmp::ERR_MISSEDREQPARAMS;
         return $ok;
+    }
+
+    //Validate properties before edit the database
+    private function editValidation(){
+        $valid = true;
+        $this->errno = 0;
+        if(isset($this->page_id,$this->canonical_url,$this->title,$this->meta_description,$this->robots)){
+            if(!preg_match(MyMetaPage::$regex['page_id'],$this->page_id)){
+                $valid = false;
+            }
+            if(!preg_match(MyMetaPage::$regex['canonical_url'],$this->canonical_url)){
+                $valid = false;
+            }
+            if(!preg_match(MyMetaPage::$regex['title'],$this->title)){
+                $valid = false;
+            }
+            if(!preg_match(MyMetaPage::$regex['meta_description'],$this->meta_description)){
+                $valid = false;
+            }
+            if(!preg_match(MyMetaPage::$regex['robots'],$this->robots)){
+                $valid = false;
+            }
+        }//if(isset($this->page_id,$this->canonical_url,$this->title,$this->meta_description,$this->robots)){
+        else{
+            $this->errno = Mmp::ERR_MISSEDREQPARAMS;
+            $valid = false;
+        }
+        return $valid;
+    }
+
+    //check if MySql table exists before proceed
+    private function tableExists(){
+        $exists = false;
+        $this->query = <<<SQL
+SHOW TABLES LIKE '{$this->table}';
+SQL;
+        $this->queries[] = $this->query;
+        $table = $this->wpdb->get_var($this->query);
+        if($table != null)$exists = true;
+        else $exists = false;
+        return $exists;
     }
 }
 ?>
