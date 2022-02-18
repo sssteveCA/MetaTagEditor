@@ -24,5 +24,7 @@ interface MmpErrors{
     const MSG_TITLE_NOTMATCH = "il titolo ha un formato non valido";
     const MSG_METADESCRIPTION_NOTMATCH = "La descrizione meta ha un formato non valido";
     const MSG_ROBOTS_NOTMATCH = "Le meta direttive robots non sono in un formato non valido";
+    const MSG_QUERYERROR = "La query inviata non è corretta";
+    const MSG_NOROWSAFFECTED = "Nessuna modifica alla tabella eseguita";
 }
 ?>

@@ -62,12 +62,25 @@ class MyMetaPage implements Mmp, C{
                 $this->error = Mmp::MSG_NORESULTS;
                 break;
             case Mmp::ERR_PAGEID_NOTMATCH: 
+                $this->error = Mmp::MSG_PAGEID_NOTMATCH;
+                break;
             case Mmp::ERR_CANONICALURL_NOTMATCH:
-            case Mmp::ERR_TITLE_NOTMATCH: 
+                $this->error = Mmp::MSG_CANONICALURL_NOTMATCH;
+                break;
+            case Mmp::ERR_TITLE_NOTMATCH:
+                $this->error = Mmp::MSG_TITLE_NOTMATCH; 
+                break;
             case Mmp::ERR_METADESCRIPTION_NOTMATCH: 
+                $this->error = Mmp::MSG_METADESCRIPTION_NOTMATCH;
+                break;
             case Mmp::ERR_ROBOTS_NOTMATCH: 
+                $this->error = Mmp::MSG_ROBOTS_NOTMATCH;
+                break;
             case Mmp::ERR_QUERYERROR: 
+                $this->error = Mmp::MSG_QUERYERROR;
+                break;
             case Mmp::ERR_NOROWSAFFECTED:
+                $this->error = Mmp::MSG_NOROWSAFFECTED;
                 break;
             default:
                 $this->error = null;
