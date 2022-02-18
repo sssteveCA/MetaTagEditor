@@ -61,6 +61,14 @@ class MyMetaPage implements Mmp, C{
             case Mmp::ERR_NORESULTS:
                 $this->error = Mmp::MSG_NORESULTS;
                 break;
+            case Mmp::ERR_PAGEID_NOTMATCH: 
+            case Mmp::ERR_CANONICALURL_NOTMATCH:
+            case Mmp::ERR_TITLE_NOTMATCH: 
+            case Mmp::ERR_METADESCRIPTION_NOTMATCH: 
+            case Mmp::ERR_ROBOTS_NOTMATCH: 
+            case Mmp::ERR_QUERYERROR: 
+            case Mmp::ERR_NOROWSAFFECTED:
+                break;
             default:
                 $this->error = null;
                 break;
@@ -77,9 +85,28 @@ class MyMetaPage implements Mmp, C{
 
     public function editPageMeta(){
         $ok = false;
+        $this->errno = 0;
         if($this->editValidation()){
             //validation passed
-        }
+            $sql = <<<SQL
+INSERT INTO `{$this->table}` (`page_id`,`canonical_url`,`title`,`meta_description`,`robots`)
+VALUES (%d,%s,%s,%s,%s)
+ON DUPLICATE KEY UPDATE `canonical_url`= %s,`title`= %s,`meta_description`= %s,`robots`= %s;
+SQL;
+            $this->query = $this->wpdb->prepare($sql,$this->page_id,$this->canonical_url,$this->title,$this->meta_description,$this->robots,
+                            $this->canonical_url,$this->title,$this->meta_description,$this->robots);
+            $affected_rows = $this->wpdb->query($this->query);
+            if($affected_rows !== false){
+                if($affected_rows > 0){
+                    $ok = true;
+                }//if($affected_rows > 0){
+                else
+                    $this->errno = Mmp::ERR_NOROWSAFFECTED;
+            }//if($affected_rows !== false){
+            else
+                $this->errno = Mmp::ERR_QUERYERROR;
+            $this->queries[] = $this->query;
+        }//if($this->editValidation()){
         return $ok;
     }
 

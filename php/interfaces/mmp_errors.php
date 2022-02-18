@@ -12,6 +12,8 @@ interface MmpErrors{
     const ERR_TITLE_NOTMATCH = 5; //title doesn't match with regular expression
     const ERR_METADESCRIPTION_NOTMATCH = 6; //meta_description doesn't match with regular expression
     const ERR_ROBOTS_NOTMATCH = 7; //robots doesn't match with regular expression
+    const ERR_QUERYERROR = 8; //SQL syntax error
+    const ERR_NOROWSAFFECTED = 9; //No rows affected in last query
 
     //messages
     const MSG_MISSEDREQPARAMS = "Uno o più parametri richiesti sono mancanti";
