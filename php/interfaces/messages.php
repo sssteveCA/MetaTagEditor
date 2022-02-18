@@ -8,5 +8,8 @@ interface Messages{
     const ERR_DATA_MISSED = "Inserisci i dati richiesti per continuare";
     const ERR_PAGE_NOTEXISTS = "La pagina specificata non esiste";
     const ERR_YOASTSEO_MISSING = "Per poter usare questo plugin è necessario aver installato 'Yoast SEO'"; 
+
+    //success
+    const OK_DB_EDIT = "Modifica del database completata";
 }
 ?>
