@@ -14,15 +14,15 @@ $js = <<<JS
 let ajaxGet = '{$ajaxGet}';
 let ajaxSet = '{$ajaxSet}';
 let bt_page_id_show, bt_page_edit; //Buttons for show page meta and for edit it
-let headers = {}; //HTTP headers
+//let headers = {}; //HTTP headers
 let in_page_id_show; //Input field for page_id 
-let method; //HTTP method
-let mh; //MyHttp class instance
+//let method; //HTTP method
+//let mh; //MyHttp class instance
 let page; //Page class instance
-let page_id; //page_id value
-let params = {}; //HTTP body request
-let response; // HTTP response;
-let spinner;
+let main_page_id; //page_id value
+//let params = {}; //HTTP body request
+//let response; // HTTP response;
+//let spinner;
 
 
 document.addEventListener('DOMContentLoaded',function(){
@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded',function(){
     bt_page_edit = document.getElementById('mte_btn_edit');
     bt_page_id_show.onclick = function(){
         //User wants to show meta tags info about a particular page
-        page_id = in_page_id_show.value;
-        getPageMetaTags(page_id);
+        main_page_id = in_page_id_show.value;
+        getPageMetaTags(main_page_id,ajaxGet);
     };//bt_page_id_show.onclick = function(){
     bt_page_edit.onclick = function (){
         //User wants edit meta tag page
@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded',function(){
         page.meta_description = document.getElementById('mte_meta_description_edit').value;
         page.robots = document.getElementById('mte_robots_edit').value;
         console.log(page);
+        editPageMetaTags(page,ajaxSet);
     };//bt_page_edit.onclick = function (){
 });
 JS;

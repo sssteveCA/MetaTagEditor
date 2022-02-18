@@ -36,6 +36,10 @@ interface Html{
                 <div class="col-12 col-sm-4 text-center text-sm-end mb-2">
                     <button id="mte_btn_edit" class="btn btn-primary">MODIFICA</button>
                 </div>
+                <div class="col-12 col-sm-2 d-flex justify-content-center">
+                    <div id="mte_page_edit_spinner" class="spinner-border d-none" role="status">
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <!-- Contains input fields to edit meta tags -->

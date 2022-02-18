@@ -8,7 +8,11 @@ let arrLabels = {
 let arrValues;
 let container;
 let divLabel, divRow, divValue;
+let headers,method,mh;
+let params, response;
+let spinner;
 let textLabel, textValue;
+
 
 //display the values of Page object 
 function displayPageValues(page){
@@ -56,25 +60,46 @@ function displayPageValues(page){
 function editPageMetaTags(page,url){
     if(page.notEmpty()){
         //all edit page field must be filled
+        method = 'POST';
+        headers = {
+                'Content-Type' : 'application/x-www-form-urlencoded'
+        };
+        params = "pageId="+page.page_id+"&canonical_url="+page.canonical_url+"&title="+page.title+"&meta_description="+page.meta_description+"&robots="+page.robots;
+        mh = new MyHttp(url,method,headers,params);
+        //display spinner while waiting the response
+        spinner = document.getElementById('mte_page_edit_spinner');
+        spinner.classList.toggle('d-none');
+        //send edit meta request
+        response = mh.getResponse();
+        response.then(result => {
+            console.log(result);
+        })
+        .catch(error => {
+            console.warn(error);
+        })
+        .finally(() => {
+            spinner.classList.toggle('d-none');
+        });//response.then(result => {
+
     }//if(page.notEmpty()){
 }
 
 //get meta tags value of particular page
-function getPageMetaTags(page_id){
-    let method = 'POST';
-    let headers = {
+function getPageMetaTags(page_id,url){
+    method = 'POST';
+    headers = {
             'Content-Type' : 'application/x-www-form-urlencoded'
         };
-    let params =  "pageId="+page_id;
-    let mh = new MyHttp(ajaxGet,method,headers,params);
+    params =  "pageId="+page_id;
+    mh = new MyHttp(url,method,headers,params);
     //display spinner while waiting the response
-    let spinner = document.getElementById('mte_page_value_spinner');
+    spinner = document.getElementById('mte_page_value_spinner');
     spinner.classList.toggle('d-none');
-    let response = mh.getResponse();
+    response = mh.getResponse();
     response.then(result => {
         //get response from ajaxUrl
         console.log(result);
-        let page = new Page();
+        page = new Page();
         var pageParsed = page.parseJsonString(result); //parse JSON string and set properties values
         if(pageParsed){
             //JSON string parsed successufly
