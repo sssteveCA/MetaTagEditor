@@ -4,6 +4,7 @@ class Page{
 
     static ERR_JSONERROR = 1;
     static ERR_PROPERTYMISSING = 2;
+    static ERR_VALUESEMPTY = 3;
 
     _id;
     _page_id;
@@ -37,6 +38,13 @@ class Page{
     set title(title){this._title = title;}
     set meta_description(meta_description){this._meta_description = meta_description;}
     set robots(robots){this._robots = robots;}
+
+    //check if all values are not empty
+    notEmpty(){
+        let empty = false;
+        this._errno = 0;
+        return empty;
+    }
 
     //Parse JSON string response and insert values in properties
     parseJsonString(jsonStr){

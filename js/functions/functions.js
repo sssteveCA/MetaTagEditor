@@ -51,3 +51,8 @@ function displayPageValues(page){
     else
         console.error("L'elemento richiesto non è stato trovato");
 }
+
+//insert or update the meta page values 
+function editPageMetaTags(page){
+    
+}
