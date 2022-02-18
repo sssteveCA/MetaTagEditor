@@ -6,6 +6,7 @@ interface Constants{
 
     //ajax URL
     const AJAX_GETMETA = Constants::PLUGIN_DIR."/php/ajax/getmeta.php"; //Get all pages meta from database
+    const AJAX_SETMETA = Constants::PLUGIN_DIR."/php/ajax/setmeta.php"; //Edit meta tags of particular page
 
     //Bootstrap path
     const BS_CSS_PATH = Constants::BS_VERSION."/css/bootstrap.min.css";

@@ -41,9 +41,13 @@ class Page{
 
     //check if all values are not empty
     notEmpty(){
-        let empty = false;
+        let filled = false;
         this._errno = 0;
-        return empty;
+        if(this._page_id && this._canonical_url && this._title && this._meta_description && this._robots ){
+            filled = true;
+        }
+        else this._errno = Page.ERR_VALUESEMPTY;
+        return filled;
     }
 
     //Parse JSON string response and insert values in properties

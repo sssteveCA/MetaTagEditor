@@ -53,6 +53,40 @@ function displayPageValues(page){
 }
 
 //insert or update the meta page values 
-function editPageMetaTags(page){
-    
+function editPageMetaTags(page,url){
+    if(page.notEmpty()){
+        //all edit page field must be filled
+    }//if(page.notEmpty()){
+}
+
+//get meta tags value of particular page
+function getPageMetaTags(page_id){
+    let method = 'POST';
+    let headers = {
+            'Content-Type' : 'application/x-www-form-urlencoded'
+        };
+    let params =  "pageId="+page_id;
+    let mh = new MyHttp(ajaxGet,method,headers,params);
+    //display spinner while waiting the response
+    let spinner = document.getElementById('mte_page_value_spinner');
+    spinner.classList.toggle('d-none');
+    let response = mh.getResponse();
+    response.then(result => {
+        //get response from ajaxUrl
+        console.log(result);
+        let page = new Page();
+        var pageParsed = page.parseJsonString(result); //parse JSON string and set properties values
+        if(pageParsed){
+            //JSON string parsed successufly
+            displayPageValues(page);
+        }
+        else
+            console.log("errore => "+page.errno)
+    })//response.then(result => {
+    .catch(error => {
+        console.warn(error);
+    })
+    .finally(() => {
+        spinner.classList.toggle('d-none');
+    });
 }

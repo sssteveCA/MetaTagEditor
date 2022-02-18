@@ -6,10 +6,13 @@ require_once("../php/interfaces/constants.php");
 
 use MetaTagEditor\Interfaces\Constants as C;
 
-$ajax = plugins_url().C::AJAX_GETMETA;
+$plugins_url = plugins_url();
+$ajaxGet = $plugins_url.C::AJAX_GETMETA;
+$ajaxSet = $plugins_url.C::AJAX_SETMETA;
 
 $js = <<<JS
-let ajaxUrl = '{$ajax}';
+let ajaxGet = '{$ajaxGet}';
+let ajaxSet = '{$ajaxSet}';
 let bt_page_id_show, bt_page_edit; //Buttons for show page meta and for edit it
 let headers = {}; //HTTP headers
 let in_page_id_show; //Input field for page_id 
@@ -29,35 +32,7 @@ document.addEventListener('DOMContentLoaded',function(){
     bt_page_id_show.onclick = function(){
         //User wants to show meta tags info about a particular page
         page_id = in_page_id_show.value;
-        method = 'POST';
-        headers = {
-            'Content-Type' : 'application/x-www-form-urlencoded'
-        };
-        params =  "pageId="+page_id;
-        mh = new MyHttp(ajaxUrl,method,headers,params);
-        //display spinner while waiting the response
-        spinner = document.getElementById('mte_page_value_spinner');
-        spinner.classList.toggle('d-none');
-        response = mh.getResponse();
-        response
-            .then(result => {
-                //get response from ajaxUrl
-                console.log(result);
-                page = new Page();
-                var pageParsed = page.parseJsonString(result); //parse JSON string and set properties values
-                if(pageParsed){
-                    //JSON string parsed successufly
-                    displayPageValues(page);
-                }
-                else
-                    console.log("errore => "+page.errno)
-            })
-            .catch(error => {
-                console.warn(error);
-            })
-            .finally(() => {
-                spinner.classList.toggle('d-none');
-            });
+        getPageMetaTags(page_id);
     };//bt_page_id_show.onclick = function(){
     bt_page_edit.onclick = function (){
         //User wants edit meta tag page
