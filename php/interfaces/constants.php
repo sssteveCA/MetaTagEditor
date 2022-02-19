@@ -24,6 +24,7 @@ interface Constants{
     const H_CSS1 = "metaTagStyle";
     const H_JS1 = "metaTagJs";
     const H_JS_FUNCTIONS1 = "metaTagJsFunctions";
+    const H_JS_FUNCTIONS2 = "metaTagJsFunctions2";
     const H_JS_MYHTTP = "metaTagJsMyHttp";
     const H_JS_PAGE = "metaTagJsPage";
     const H_JS_PAGELIST = "metaTagJsPagelist";
@@ -39,6 +40,7 @@ interface Constants{
     const PLUGIN_DIR = "/meta-tag-editor";
     const PLUGIN_CSS_PATH1 = Constants::PLUGIN_DIR."/css/meta-tag-style.css";
     const PLUGIN_JS_FUNCTIONS1 = Constants::PLUGIN_DIR."/js/functions/functions.js";
+    const PLUGIN_JS_FUNCTIONS2 = Constants::PLUGIN_DIR."/js/functions/functions2.js";
     const PLUGIN_JS_MYHTTP = Constants::PLUGIN_DIR."/js/client/myhttp.js";
     const PLUGIN_JS_PAGE = Constants::PLUGIN_DIR."/js/models/page.js";
     const PLUGIN_JS_PAGELIST = Constants::PLUGIN_DIR."/js/models/pagelist.js";

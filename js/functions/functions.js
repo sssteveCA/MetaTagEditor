@@ -99,6 +99,7 @@ function getAllPages(url){
             pagesList = new PagesList(result);
             pagesList.parseText();
             console.log(pagesList.pages);
+            displayAllPagesEdited(pagesList.pages);
         })
         .catch(error => {
             console.warn(error);

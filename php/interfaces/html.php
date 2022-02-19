@@ -45,42 +45,42 @@ interface Html{
                 <!-- Contains input fields to edit meta tags -->
                 <div class="mte_data col-12">
                     <div class="row">
-                        <div class="col-12 col-md-5 m-2">
+                        <div class="col-12 col-md-5 text-center text-md-start m-2">
                             <label for="mte_canonical_url_edit">URL canonico</label> 
                         </div>
-                        <div class="col-12 offset-md-1 col-md-5 m-2">
+                        <div class="col-12 offset-md-1 col-md-5 text-center text-md-start m-2">
                             <input type="text" id="mte_canonical_url_edit">
                         </div>
-                        <div class="col-12 col-md-5 m-2">
+                        <div class="col-12 col-md-5 text-center text-md-start m-2">
                             <label for="mte_title_edit">Titolo</label>
                         </div>
-                        <div class="col-12 offset-md-1 col-md-5 m-2">
+                        <div class="col-12 offset-md-1 col-md-5 text-center text-md-start m-2">
                             <input type="text" id="mte_title_edit">
                         </div>
-                        <div class="col-12 col-md-5 m-2">
+                        <div class="col-12 col-md-5 text-center text-md-start m-2">
                             <label for="mte_meta_description_edit">Meta description</label>
                         </div>
-                        <div class="col-12 offset-md-1 col-md-5 m-2">
+                        <div class="col-12 offset-md-1 col-md-5 text-center text-md-start m-2">
                             <input type="text" id="mte_meta_description_edit">
                         </div>
-                        <div class="col-12 col-md-5 m-2">
+                        <div class="col-12 col-md-5 text-center text-md-start m-2">
                             <label for="mte_robots_edit">Robots</label>
                         </div>
-                        <div class="col-12 offset-md-1 col-md-5 m-2">
+                        <div class="col-12 offset-md-1 col-md-5 text-center text-md-start m-2">
                             <input type="text" id="mte_robots_edit">
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Contain input field to delete custom meta page value -->
-            <div class="row">
-                <div class="col-12 col-sm-4 text-center text-sm-start mt-4 mb-2">
+            <div id="mte_pagelist_collections" class="row">
+                <!-- <div class="col-12 col-sm-4 text-center text-sm-start mt-4 mb-2">
                     <input type="number" id="mte_page_id_delete" name="page_id_delete" placeholder="ID della pagina da cancellare">
                 </div>
                 <div class="col-12 col-sm-4 text-center text-sm-end mt-4 mb-2">
                     <button id="mte_btn_delete" class="btn btn-danger">ELIMINA</button>
                 </div>
-                <!-- display spinner while waiting meta information of page -->
+                 display spinner while waiting meta information of page --> 
                 <div class="col-12 col-sm-2 d-flex justify-content-center mt-4">
                     <div id="mte_page_delete_spinner" class="spinner-border d-none" role="status">
                     </div>

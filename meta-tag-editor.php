@@ -62,6 +62,7 @@ function mte_enqueue_scripts(){
     $bsJs = $home.C::BS_JS_PATH;
     $metaTagCss = $plugin_url.C::PLUGIN_CSS_PATH1;
     $metaTagJsFunc = $plugin_url.C::PLUGIN_JS_FUNCTIONS1;
+    $metaTagJsFunc2 = $plugin_url.C::PLUGIN_JS_FUNCTIONS2;
     $metaTagJsMyHttp = $plugin_url.C::PLUGIN_JS_MYHTTP;
     $metaTagJsPage = $plugin_url.C::PLUGIN_JS_PAGE;
     $metaTagJsPages = $plugin_url.C::PLUGIN_JS_PAGELIST;
@@ -74,7 +75,8 @@ function mte_enqueue_scripts(){
     wp_register_script(C::H_JS_PAGELIST,$metaTagJsPages,array(),null);
     wp_register_script(C::H_JS_MYHTTP,$metaTagJsMyHttp,array(),null);
     wp_register_script(C::H_JS_FUNCTIONS1,$metaTagJsFunc,array(),null);
-    wp_enqueue_script(C::H_JS1,$metaTagJs,array(C::H_JS_FUNCTIONS1,C::H_JS_PAGE,C::H_JS_PAGELIST,C::H_JS_MYHTTP),null);
+    wp_register_script(C::H_JS_FUNCTIONS2,$metaTagJsFunc2,array(),null);
+    wp_enqueue_script(C::H_JS1,$metaTagJs,array(C::H_JS_FUNCTIONS1,C::H_JS_FUNCTIONS2,C::H_JS_PAGE,C::H_JS_PAGELIST,C::H_JS_MYHTTP),null);
 }
 
 //Print the menu in control panel
