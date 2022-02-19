@@ -34,6 +34,8 @@ class MyMetaPage implements Mmp, C{
     {
         global $wpdb;
         $this->wpdb = $wpdb;
+        $this->query = null;
+        $this->queries = array();
         $this->table = isset($dati['table']) ? $this->wpdb->prefix.$dati['table'] : $this->wpdb->prefix.C::TABLE_NAME;
         if(!$this->tableExists()){
             //table specified doesn't exists
@@ -47,8 +49,6 @@ class MyMetaPage implements Mmp, C{
         $this->title = isset($dati['title']) ? $dati['title'] : null;
         $this->errno = 0;
         $this->error = null;
-        $this->queries = array();
-        $this->query = null;
     }
 
     public function getCanonicalUrl(){return $this->canonical_url;}
