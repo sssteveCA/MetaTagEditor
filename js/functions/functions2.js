@@ -1,9 +1,17 @@
 
+
+const labels = {
+    'canonical_url' : 'URL canonico',
+    'title' : 'Titolo',
+    'meta_description' : 'Meta description',
+    'robots' : 'Robots'
+};
 let func2_pageslistDiv;
 
 //display all pages meta tags edited by this plugin
 function displayAllPagesEdited(pageList){
     let list = pageList;
+    console.log(list);
     func2_pageslistDiv = document.getElementById('mte_pagelist_collections');
     if(func2_pageslistDiv){
         func2_pageslistDiv.innerHTML = '';
@@ -37,6 +45,27 @@ function displayAllPagesEdited(pageList){
         func2_pageslistDiv.appendChild(divDelete);
             let divBr = document.createElement('div');
             divBr.className = 'w-100';
-        func2_pageslistDiv.appendChild(divBr);  
+        func2_pageslistDiv.appendChild(divBr);
+        //create meta tag page info items
+            let divInfo = document.createElement('div');
+            divInfo.className = 'col-12';
+                let rowInfo = document.createElement('div');
+                rowInfo.className = 'row';
+                for(var [key, val] of Object.entries(labels)){
+                    let divLabel = document.createElement('div');
+                    divLabel.classList.add('col-12','col-md-6','text-center','text-md-start');
+                    divLabel.innerText = val;
+                rowInfo.appendChild(divLabel);
+                    let divValue = document.createElement('div');
+                    divValue.classList.add('col-12','col-md-6','text-center','text-md-start');
+                    divValue.innerText = list[selectItem.value][key];
+                rowInfo.appendChild(divValue);
+                }//for(var [key, val] of Object.entries(labels)){
+            divInfo.appendChild(rowInfo);
+        func2_pageslistDiv.appendChild(divInfo);
+        selectItem.onchange = function (){
+            console.log("Select option value => ");
+            console.log(selectItem.value);
+        }  
     }//if(func2_pageslistDiv){
 }
