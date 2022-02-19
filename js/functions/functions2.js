@@ -7,6 +7,7 @@ const labels = {
     'robots' : 'Robots'
 };
 let func2_pageslistDiv;
+let index;
 
 //display all pages meta tags edited by this plugin
 function displayAllPagesEdited(pageList){
@@ -53,19 +54,28 @@ function displayAllPagesEdited(pageList){
                 rowInfo.className = 'row';
                 for(var [key, val] of Object.entries(labels)){
                     let divLabel = document.createElement('div');
-                    divLabel.classList.add('col-12','col-md-6','text-center','text-md-start');
+                    divLabel.classList.add('col-12','col-md-6','text-center','text-md-start','mt-3');
                     divLabel.innerText = val;
+                    divLabel.style.fontSize = '18px';
+                    divLabel.style.textTransform = 'uppercase';
                 rowInfo.appendChild(divLabel);
                     let divValue = document.createElement('div');
-                    divValue.classList.add('col-12','col-md-6','text-center','text-md-start');
+                    divValue.setAttribute('id','mte_edit_val_'+key);
+                    divValue.classList.add('col-12','col-md-6','text-center','text-md-start','mt-3');
                     divValue.innerText = list[selectItem.value][key];
+                    divValue.style.fontSize = '18px';
+                    divValue.style.fontWeight = 'bold';
+                    divValue.style.fontStyle = 'italic';
                 rowInfo.appendChild(divValue);
                 }//for(var [key, val] of Object.entries(labels)){
             divInfo.appendChild(rowInfo);
         func2_pageslistDiv.appendChild(divInfo);
         selectItem.onchange = function (){
-            console.log("Select option value => ");
-            console.log(selectItem.value);
-        }  
+            index = this.value;
+            document.getElementById('mte_edit_val_canonical_url').innerText = list[index]["canonical_url"];
+            document.getElementById('mte_edit_val_title').innerText = list[index]["title"];
+            document.getElementById('mte_edit_val_meta_description').innerText = list[index]["meta_description"];
+            document.getElementById('mte_edit_val_robots').innerText = list[index]["robots"];
+        } //selectItem.onchange = function (){
     }//if(func2_pageslistDiv){
 }
