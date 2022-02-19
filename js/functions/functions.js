@@ -8,8 +8,9 @@ let arrLabels = {
 let arrValues;
 let container;
 let divLabel, divRow, divValue;
+let func_page;
 let headers,method,mh;
-let params, response;
+let params,pagesList,response;
 let spinner;
 let textLabel, textValue;
 
@@ -73,7 +74,7 @@ function editPageMetaTags(page,url){
         response = mh.getResponse();
         if(mh.response != null){
             mh.response.then(result => {
-                //console.log(result);
+                console.log(result);
             })
             .catch(error => {
                 console.warn(error);
@@ -94,7 +95,10 @@ function getAllPages(url){
     mh.getResponse();
     if(mh.response != null){
         mh.response.then(result => {
-            console.log(result);
+            //console.log(result);
+            pagesList = new PagesList(result);
+            pagesList.parseText();
+            console.log(pagesList.pages);
         })
         .catch(error => {
             console.warn(error);

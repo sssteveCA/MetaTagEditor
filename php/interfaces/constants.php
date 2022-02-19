@@ -26,6 +26,7 @@ interface Constants{
     const H_JS_FUNCTIONS1 = "metaTagJsFunctions";
     const H_JS_MYHTTP = "metaTagJsMyHttp";
     const H_JS_PAGE = "metaTagJsPage";
+    const H_JS_PAGELIST = "metaTagJsPagelist";
     
     //menu
     const MENU_TITLE = "Modifica meta tag";
@@ -40,6 +41,7 @@ interface Constants{
     const PLUGIN_JS_FUNCTIONS1 = Constants::PLUGIN_DIR."/js/functions/functions.js";
     const PLUGIN_JS_MYHTTP = Constants::PLUGIN_DIR."/js/client/myhttp.js";
     const PLUGIN_JS_PAGE = Constants::PLUGIN_DIR."/js/models/page.js";
+    const PLUGIN_JS_PAGELIST = Constants::PLUGIN_DIR."/js/models/pagelist.js";
     const PLUGIN_JS_PATH1 = Constants::PLUGIN_DIR."/js/main.php";
     const PLUGIN_MAIN_FILE = Constants::PLUGIN_DIR."/meta-tag-editor.php";
     const PLUGIN_YOASTSEO_FILE = "wordpress-seo/wp-seo.php";
