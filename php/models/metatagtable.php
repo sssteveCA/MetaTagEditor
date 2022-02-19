@@ -36,7 +36,17 @@ class MetaTagTable implements Mmt{
     public function getQuery(){return $this->query;}
     public function getPages(){return $this->pages;}
     public function getErrno(){return $this->errno;}
-    public function getError(){return $this->error;}
+    public function getError(){
+        switch($this->errno){
+            case Mmt::ERR_NORESULTS:
+                $this->error = Mmt::MSG_NORESULTS;
+                break;
+            default:
+                $this->error = null;
+                break;
+        }
+        return $this->error;
+    }
 
     //Retrieve all table content
     public function getDataFromDb(){
@@ -50,6 +60,8 @@ SQL;
         if($this->pages !== null){
             $ok = true;
         }//if($result !== null){
+        else
+            $this->errno = Mmt::ERR_NORESULTS;
         return $ok;
     }
 
