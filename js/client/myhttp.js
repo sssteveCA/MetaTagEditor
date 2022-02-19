@@ -9,6 +9,7 @@ class MyHttp{
     _headers; //Request headers
     _params; //POST request params
     _errno; //error code
+    _response; //HTTP text response
 
     constructor(url, method, headers = {}, params = {}){
         this._url = url; 
@@ -16,6 +17,7 @@ class MyHttp{
         this._headers = headers; 
         this._params = params;
         this._errno = 0;
+        this._response = null;
 
     }//constructor(){
 
@@ -25,23 +27,24 @@ class MyHttp{
     get headers(){return this._headers;}
     get params(){return this._params;}
     get errno(){return this._errno;}
+    get response(){return this._response;}
 
     //this method returns an HTTP string response
     getResponse(){
-        var response = null;
+        this._response = null;
         this._errno = 0;
         if(this._url !== null){
             if(this._method != null){
                 if(this._headers == null)
                     this._headers = {};
                 if(this._method == 'GET' || this._method == 'HEAD'){
-                    response = this.#getResultGet();
+                    this._response = this.#getResultGet();
                 }//if(this._method == 'GET' || this._method == 'HEAD'){
                 else{
                     //These method need request body
                     if(this._params == null)
                     this._params = {};
-                    response = this.#getResultPost();
+                    this._response = this.#getResultPost();
                 }
             }//if(this._method != null){
             else
@@ -49,7 +52,7 @@ class MyHttp{
         }// if(this._url !== null){
         else
             this._errno = MyHttp.ERR_URLMISSING;
-        return response;
+        return this._response;
     }
 
     //get HTTP response from GET method

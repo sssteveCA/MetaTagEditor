@@ -71,16 +71,17 @@ function editPageMetaTags(page,url){
         spinner.classList.toggle('d-none');
         //send edit meta request
         response = mh.getResponse();
-        response.then(result => {
-            console.log(result);
-        })
-        .catch(error => {
-            console.warn(error);
-        })
-        .finally(() => {
-            spinner.classList.toggle('d-none');
-        });//response.then(result => {
-
+        if(mh.response != null){
+            mh.response.then(result => {
+                //console.log(result);
+            })
+            .catch(error => {
+                console.warn(error);
+            })
+            .finally(() => {
+                spinner.classList.toggle('d-none');
+            });//response.then(result => {
+        }//if(mh.response != null){
     }//if(page.notEmpty()){
 }
 
@@ -90,16 +91,18 @@ function getAllPages(url){
     headers = {};
     params = {};
     mh = new MyHttp(url,method);
-    response = mh.getResponse();
-    response.then(result => {
-        console.log(result);
-    })
-    .catch(error => {
-        console.warn(error);
-    })
-    .finally(() => {
-
-    });
+    mh.getResponse();
+    if(mh.response != null){
+        mh.response.then(result => {
+            console.log(result);
+        })
+        .catch(error => {
+            console.warn(error);
+        })
+        .finally(() => {
+    
+        });
+    }//if(mh.response != null){
 }
 
 //get meta tags value of particular page
@@ -113,23 +116,25 @@ function getPageMetaTags(page_id,url){
     //display spinner while waiting the response
     spinner = document.getElementById('mte_page_value_spinner');
     spinner.classList.toggle('d-none');
-    response = mh.getResponse();
-    response.then(result => {
-        //get response from ajaxUrl
-        console.log(result);
-        page = new Page();
-        var pageParsed = page.parseJsonString(result); //parse JSON string and set properties values
-        if(pageParsed){
-            //JSON string parsed successufly
-            displayPageValues(page);
-        }
-        else
-            console.log("errore => "+page.errno)
-    })//response.then(result => {
-    .catch(error => {
-        console.warn(error);
-    })
-    .finally(() => {
-        spinner.classList.toggle('d-none');
-    });
+    mh.getResponse();
+    if(mh.response != null){
+        mh.response.then(result => {
+            //get response from ajaxUrl
+            console.log(result);
+            page = new Page();
+            var pageParsed = page.parseJsonString(result); //parse JSON string and set properties values
+            if(pageParsed){
+                //JSON string parsed successufly
+                displayPageValues(page);
+            }
+            else
+                console.log("errore => "+page.errno)
+        })//response.then(result => {
+        .catch(error => {
+            console.warn(error);
+        })
+        .finally(() => {
+            spinner.classList.toggle('d-none');
+        });
+    }//if(mh.response != null){
 }
