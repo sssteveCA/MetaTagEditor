@@ -8,24 +8,23 @@ use MetaTagEditor\Interfaces\Constants as C;
 
 $plugins_url = plugins_url();
 $ajaxGet = $plugins_url.C::AJAX_GETMETA;
+$ajaxGetAll = $plugins_url.C::AJAX_ALLMETA;
 $ajaxSet = $plugins_url.C::AJAX_SETMETA;
 
 $js = <<<JS
 let ajaxGet = '{$ajaxGet}';
+let ajaxGetAll = '{$ajaxGetAll}';
 let ajaxSet = '{$ajaxSet}';
 let bt_page_id_show, bt_page_edit; //Buttons for show page meta and for edit it
-//let headers = {}; //HTTP headers
 let in_page_id_show; //Input field for page_id 
-//let method; //HTTP method
-//let mh; //MyHttp class instance
 let page; //Page class instance
 let main_page_id; //page_id value
-//let params = {}; //HTTP body request
-//let response; // HTTP response;
-//let spinner;
+
 
 
 document.addEventListener('DOMContentLoaded',function(){
+    //Request for retrieving meta tags from plugin MySQL table
+    getAllPages(ajaxGetAll);
     in_page_id_show = document.getElementById('mte_page_id_get');
     bt_page_id_show = document.getElementById('mte_btn_show');
     bt_page_edit = document.getElementById('mte_btn_edit');

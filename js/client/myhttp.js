@@ -10,7 +10,7 @@ class MyHttp{
     _params; //POST request params
     _errno; //error code
 
-    constructor(url, method, headers,params){
+    constructor(url, method, headers = {}, params = {}){
         this._url = url; 
         this._method = method;
         this._headers = headers; 
@@ -34,9 +34,15 @@ class MyHttp{
             if(this._method != null){
                 if(this._headers == null)
                     this._headers = {};
-                if(this._params == null)
+                if(this._method == 'GET' || this._method == 'HEAD'){
+                    response = this.#getResultGet();
+                }//if(this._method == 'GET' || this._method == 'HEAD'){
+                else{
+                    //These method need request body
+                    if(this._params == null)
                     this._params = {};
-                    response = this.#getResult();
+                    response = this.#getResultPost();
+                }
             }//if(this._method != null){
             else
                 this._errno = MyHttp.ERR_METHODMISSING;
@@ -46,8 +52,18 @@ class MyHttp{
         return response;
     }
 
-    //get HTTP response from Promise
-    async #getResult(){
+    //get HTTP response from GET method
+    async #getResultGet(){
+        var promiseVals = {
+            method : this._method,
+            headers : this._headers
+        };
+        var promise = await fetch(this._url);
+        return promise.text(); //returns response as text
+    }
+
+    //get HTTP response from POST method
+    async #getResultPost(){
         var promiseVals = {
             method : this._method,
             headers : this._headers,

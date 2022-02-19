@@ -84,6 +84,24 @@ function editPageMetaTags(page,url){
     }//if(page.notEmpty()){
 }
 
+//get meta tags edited by this plugin from all pages 
+function getAllPages(url){
+    method = 'GET';
+    headers = {};
+    params = {};
+    mh = new MyHttp(url,method);
+    response = mh.getResponse();
+    response.then(result => {
+        console.log(result);
+    })
+    .catch(error => {
+        console.warn(error);
+    })
+    .finally(() => {
+
+    });
+}
+
 //get meta tags value of particular page
 function getPageMetaTags(page_id,url){
     method = 'POST';
