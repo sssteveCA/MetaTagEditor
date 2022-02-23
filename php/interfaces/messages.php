@@ -10,6 +10,7 @@ interface Messages{
     const ERR_YOASTSEO_MISSING = "Per poter usare questo plugin è necessario aver installato 'Yoast SEO'"; 
 
     //success
-    const OK_DB_EDIT = "Modifica del database completata";
+    const OK_DB_DELETE = "Meta Tags della pagina cancellati";
+    const OK_DB_EDIT = "Meta Tags della pagina modificati";
 }
 ?>

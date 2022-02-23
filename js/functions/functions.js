@@ -87,19 +87,19 @@ function editPageMetaTags(page,url){
 }
 
 //get meta tags edited by this plugin from all pages 
-function getAllPages(url){
+function getAllPages(getAllUrl,deleteUrl){
     method = 'GET';
     headers = {};
     params = {};
-    mh = new MyHttp(url,method);
+    mh = new MyHttp(getAllUrl,method);
     mh.getResponse();
     if(mh.response != null){
         mh.response.then(result => {
             //console.log(result);
             pagesList = new PagesList(result);
             pagesList.parseText();
-            console.log(pagesList.pages);
-            displayAllPagesEdited(pagesList.pages);
+            //console.log(pagesList.pages);
+            displayAllPagesEdited(pagesList.pages,deleteUrl);
         })
         .catch(error => {
             console.warn(error);

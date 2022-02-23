@@ -6,6 +6,7 @@ interface Constants{
 
     //ajax URL
     const AJAX_ALLMETA = Constants::PLUGIN_DIR."/php/ajax/getallmeta.php"; //Get all pages that were edited from this plugin
+    const AJAX_DELETEMETA = Constants::PLUGIN_DIR."/php/ajax/deletemeta.php"; //Delete meta tags of particular page
     const AJAX_GETMETA = Constants::PLUGIN_DIR."/php/ajax/getmeta.php"; //Get all pages meta from Yoast REST API
     const AJAX_SETMETA = Constants::PLUGIN_DIR."/php/ajax/setmeta.php"; //Edit meta tags of particular page
 

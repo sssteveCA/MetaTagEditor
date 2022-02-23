@@ -7,11 +7,13 @@ require_once("../php/interfaces/constants.php");
 use MetaTagEditor\Interfaces\Constants as C;
 
 $plugins_url = plugins_url();
+$ajaxDelete = $plugins_url.C::AJAX_DELETEMETA;
 $ajaxGet = $plugins_url.C::AJAX_GETMETA;
 $ajaxGetAll = $plugins_url.C::AJAX_ALLMETA;
 $ajaxSet = $plugins_url.C::AJAX_SETMETA;
 
 $js = <<<JS
+let ajaxDelete = '{$ajaxDelete}';
 let ajaxGet = '{$ajaxGet}';
 let ajaxGetAll = '{$ajaxGetAll}';
 let ajaxSet = '{$ajaxSet}';
@@ -24,7 +26,7 @@ let main_page_id; //page_id value
 
 document.addEventListener('DOMContentLoaded',function(){
     //Request for retrieving meta tags from plugin MySQL table
-    getAllPages(ajaxGetAll);
+    getAllPages(ajaxGetAll,ajaxDelete);
     in_page_id_show = document.getElementById('mte_page_id_get');
     bt_page_id_show = document.getElementById('mte_btn_show');
     bt_page_edit = document.getElementById('mte_btn_edit');

@@ -6,22 +6,48 @@ const labels = {
     'meta_description' : 'Meta description',
     'robots' : 'Robots'
 };
-let func2_pageslistDiv;
+let mte_btn_delete;
+let f2_headers,f2_method, f2_mh;
+let f2_pageslistDiv, f2_params, f2_del_spinner;
 let index;
 
+//delete specific meta tags page selecting his page id
+function deleteMetaTagsPage(page_id,url){
+    f2_method = 'POST';
+    f2_headers = {
+        'Content-Type' : 'application/x-www-form-urlencoded'
+    };
+    f2_params = "page_id="+page_id;
+    f2_mh = new MyHttp(url, f2_method, f2_headers, f2_params);
+    f2_del_spinner.classList.toggle('d-none');
+    f2_mh.getResponse();
+    if(f2_mh.response != null){
+        f2_mh.response.then(result => {
+            console.log(result);
+        })
+        .catch(error => {
+            console.warn(error);
+        })
+        .finally(() => {
+            f2_del_spinner.classList.toggle('d-none');
+        });
+    }//if(f2_mh.response != null){
+
+}
+
 //display all pages meta tags edited by this plugin
-function displayAllPagesEdited(pageList){
+function displayAllPagesEdited(pageList,deleteUrl){
     let list = pageList;
-    console.log(list);
-    func2_pageslistDiv = document.getElementById('mte_pagelist_collections');
-    if(func2_pageslistDiv){
-        func2_pageslistDiv.innerHTML = '';
+    //console.log(list);
+    f2_pageslistDiv = document.getElementById('mte_pagelist_collections');
+    if(f2_pageslistDiv){
+        f2_pageslistDiv.innerHTML = '';
             let divSelectLabel = document.createElement('div');
             divSelectLabel.classList.add('col-12','col-sm-2','text-center','text-sm-start','mt-4','mb-2');
             divSelectLabel.innerText = 'ID della pagina';
             divSelectLabel.style.position = 'relative';
             divSelectLabel.style.left = '6px';
-        func2_pageslistDiv.appendChild(divSelectLabel);
+        f2_pageslistDiv.appendChild(divSelectLabel);
             let divSelect = document.createElement('div');
             divSelect.classList.add('col-12','col-sm-1','text-center','text-sm-start','mt-4','mb-2');
             //create SELECT item that contains page id list
@@ -35,18 +61,25 @@ function displayAllPagesEdited(pageList){
                 selectItem.appendChild(option);
                 }//for(var [k, v] of Object.entries(list)){
             divSelect.appendChild(selectItem);
-        func2_pageslistDiv.appendChild(divSelect);
+        f2_pageslistDiv.appendChild(divSelect);
             let divDelete = document.createElement('div');
-            divDelete.classList.add('col-12','offset-sm-3','col-sm-4','text-center','text-sm-start', 'mt-4','mb-2');
+            divDelete.classList.add('col-12','offset-sm-3','col-sm-2','text-center','text-sm-start','mt-4','mb-2');
                 let deleteBtn = document.createElement('button');
                 deleteBtn.setAttribute('id','mte_btn_delete');
                 deleteBtn.classList.add('btn','btn-danger');
                 deleteBtn.innerText = 'ELIMINA';
             divDelete.appendChild(deleteBtn);
-        func2_pageslistDiv.appendChild(divDelete);
+        f2_pageslistDiv.appendChild(divDelete);
+            let divSpinner = document.createElement('div');
+            divSpinner.classList.add('col-12','col-sm-2','d-flex','justify-content-center','mt-4','mb-4');
+                f2_del_spinner = document.createElement('div');
+                f2_del_spinner.classList.add('spinner-border','d-none');
+                f2_del_spinner.setAttribute('role','status');
+            divSpinner.appendChild(f2_del_spinner);
+        f2_pageslistDiv.appendChild(divSpinner);
             let divBr = document.createElement('div');
             divBr.className = 'w-100';
-        func2_pageslistDiv.appendChild(divBr);
+        f2_pageslistDiv.appendChild(divBr);
         //create meta tag page info items
             let divInfo = document.createElement('div');
             divInfo.className = 'col-12';
@@ -69,7 +102,7 @@ function displayAllPagesEdited(pageList){
                 rowInfo.appendChild(divValue);
                 }//for(var [key, val] of Object.entries(labels)){
             divInfo.appendChild(rowInfo);
-        func2_pageslistDiv.appendChild(divInfo);
+        f2_pageslistDiv.appendChild(divInfo);
         selectItem.onchange = function (){
             index = this.value;
             document.getElementById('mte_edit_val_canonical_url').innerText = list[index]["canonical_url"];
@@ -77,5 +110,14 @@ function displayAllPagesEdited(pageList){
             document.getElementById('mte_edit_val_meta_description').innerText = list[index]["meta_description"];
             document.getElementById('mte_edit_val_robots').innerText = list[index]["robots"];
         } //selectItem.onchange = function (){
+        mte_btn_delete = document.getElementById('mte_btn_delete');
+        if(mte_btn_delete){
+            mte_btn_delete.onclick = function(){
+                index = selectItem.value;
+                /*console.log("index => "+index);
+                console.log("page_id => "+list[index]["page_id"]);*/
+                deleteMetaTagsPage(list[index]["page_id"],deleteUrl);
+            };// mte_btn_delete.onclick = function(){
+        }//if(mte_btn_delete){
     }//if(func2_pageslistDiv){
 }

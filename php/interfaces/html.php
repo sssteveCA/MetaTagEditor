@@ -36,7 +36,7 @@ interface Html{
                 <div class="col-12 col-sm-4 text-center text-sm-end mt-4 mb-2">
                     <button id="mte_btn_edit" class="btn btn-secondary">MODIFICA</button>
                 </div>
-                <div class="col-12 col-sm-2 d-flex justify-content-center mt-4">
+                <div class="col-12 col-sm-2 d-flex justify-content-center mt-4 mb-2">
                     <div id="mte_page_edit_spinner" class="spinner-border d-none" role="status">
                     </div>
                 </div>
