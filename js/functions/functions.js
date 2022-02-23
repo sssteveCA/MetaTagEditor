@@ -99,7 +99,7 @@ function getAllPages(getAllUrl,deleteUrl){
             pagesList = new PagesList(result);
             pagesList.parseText();
             //console.log(pagesList.pages);
-            displayAllPagesEdited(pagesList.pages,deleteUrl);
+            displayAllPagesEdited(pagesList.pages,deleteUrl,getAllUrl);
         })
         .catch(error => {
             console.warn(error);

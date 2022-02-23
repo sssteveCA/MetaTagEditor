@@ -12,7 +12,7 @@ let f2_pageslistDiv, f2_params, f2_del_spinner;
 let index;
 
 //delete specific meta tags page selecting his page id
-function deleteMetaTagsPage(page_id,url){
+function deleteMetaTagsPage(page_id,url,getAllUrl){
     f2_method = 'POST';
     f2_headers = {
         'Content-Type' : 'application/x-www-form-urlencoded'
@@ -24,6 +24,7 @@ function deleteMetaTagsPage(page_id,url){
     if(f2_mh.response != null){
         f2_mh.response.then(result => {
             console.log(result);
+            getAllPages(getAllUrl,url);
         })
         .catch(error => {
             console.warn(error);
@@ -36,7 +37,7 @@ function deleteMetaTagsPage(page_id,url){
 }
 
 //display all pages meta tags edited by this plugin
-function displayAllPagesEdited(pageList,deleteUrl){
+function displayAllPagesEdited(pageList,deleteUrl,getAllUrl){
     let list = pageList;
     //console.log(list);
     f2_pageslistDiv = document.getElementById('mte_pagelist_collections');
@@ -116,7 +117,7 @@ function displayAllPagesEdited(pageList,deleteUrl){
                 index = selectItem.value;
                 /*console.log("index => "+index);
                 console.log("page_id => "+list[index]["page_id"]);*/
-                deleteMetaTagsPage(list[index]["page_id"],deleteUrl);
+                deleteMetaTagsPage(list[index]["page_id"],deleteUrl,getAllUrl);
             };// mte_btn_delete.onclick = function(){
         }//if(mte_btn_delete){
     }//if(func2_pageslistDiv){
