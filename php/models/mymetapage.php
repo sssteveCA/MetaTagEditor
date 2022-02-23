@@ -22,12 +22,12 @@ class MyMetaPage implements Mmp, C{
     private $wpdb; //Wordpress database instance
     //check if properties match with these patterns
     private static $regex = array(
-        'id' => '^(?!\s*$).+',
-        'page_id' => '^(?!\s*$).+',
-        'canonical_url' => '^(?!\s*$).+',
-        'title' => '^(?!\s*$).+',
-        'meta_description' => '^(?!\s*$).+',
-        'robots' => '^(?!\s*$).+'
+        'id' => '/^(?!\s*$).+$/',
+        'page_id' => '/^(?!\s*$).+$/',
+        'canonical_url' => '/^(?!\s*$).+$/',
+        'title' => '/^(?!\s*$).+$/',
+        'meta_description' => '/^(?!\s*$).$+/',
+        'robots' => '/^(?!\s*$).+$/'
     );
 
     public function __construct($dati)
@@ -60,6 +60,9 @@ class MyMetaPage implements Mmp, C{
                 break;
             case Mmp::ERR_NORESULTS:
                 $this->error = Mmp::MSG_NORESULTS;
+                break;
+            case Mmp::ERR_ID_NOTMATCH:
+                $this->error = Mmp::MSG_ID_NOTMATCH;
                 break;
             case Mmp::ERR_PAGEID_NOTMATCH: 
                 $this->error = Mmp::MSG_PAGEID_NOTMATCH;
@@ -101,18 +104,24 @@ class MyMetaPage implements Mmp, C{
         $ok = false;
         $this->errno = 0;
         if(isset($this->id)){
-            $ar = $this->wpdb->delete($this->table,array('id' => $this->id),array('%d'));
-            if($ar !== false){
-                //Query don't has errors
-                if($ar > 0){
-                    //One or more rows updated
-                    $ok = true;
-                }
+            if(preg_match(MyMetaPage::$regex["id"],$this->id)){
+                $ar = $this->wpdb->delete($this->table,array('id' => $this->id),array('%d'));
+                $this->query = $this->wpdb->last_query;
+                $this->queries[] = $this->query;
+                if($ar !== false){
+                    //Query don't has errors
+                    if($ar > 0){
+                        //One or more rows updated
+                        $ok = true;
+                    }
+                    else
+                        $this->errno = Mmp::ERR_NOROWSAFFECTED;
+                }//if($ar !== false){
                 else
-                    $this->errno = Mmp::ERR_NOROWSAFFECTED;
-            }//if($ar !== false){
+                    $this->errno = Mmp::ERR_QUERYERROR;
+            }//if(preg_match(MyMetaPage::$regex["id"],$this->id)){
             else
-                $this->errno = Mmp::ERR_QUERYERROR;
+                $this->errno = Mmp::ERR_ID_NOTMATCH;
         }//if(isset($this->id)){
         else
             $this->errno = Mmp::ERR_MISSEDREQPARAMS;
@@ -124,18 +133,24 @@ class MyMetaPage implements Mmp, C{
         $ok = false;
         $this->errno = 0;
         if(isset($this->page_id)){
-            $ar = $this->wpdb->delete($this->table,array('page_id' => $this->page_id),array('%d'));
-            if($ar !== false){
-                //Query don't has errors
-                if($ar > 0){
-                    //One or more rows updated
-                    $ok = true;
-                }
+            if(preg_match(MyMetaPage::$regex["page_id"],$this->page_id)){
+                $ar = $this->wpdb->delete($this->table,array('page_id' => $this->page_id),array('%d'));
+                $this->query = $this->wpdb->last_query;
+                $this->queries[] = $this->query;
+                if($ar !== false){
+                    //Query don't has errors
+                    if($ar > 0){
+                        //One or more rows updated
+                        $ok = true;
+                    }
+                    else
+                        $this->errno = Mmp::ERR_NOROWSAFFECTED;
+                }//if($ar !== false){
                 else
-                    $this->errno = Mmp::ERR_NOROWSAFFECTED;
-            }//if($ar !== false){
+                    $this->errno = Mmp::ERR_QUERYERROR;
+            }//if(preg_match(MyMetaPage::$regex["page_id"],$this->page_id)){
             else
-                $this->errno = Mmp::ERR_QUERYERROR;
+                $this->errno = Mmp::ERR_PAGEID_NOTMATCH;
         }//if(isset($this->id)){
         else
             $this->errno = Mmp::ERR_MISSEDREQPARAMS;
