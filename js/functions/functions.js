@@ -8,7 +8,7 @@ let arrLabels = {
 let arrValues;
 let container;
 let divLabel, divRow, divValue;
-let func_msg,func_page;
+let func_dialog,func_msg,func_page;
 let headers,method,mh;
 let params,pagesList,response;
 let spinner;
@@ -65,7 +65,7 @@ function editPageMetaTags(page,url){
         headers = {
                 'Content-Type' : 'application/x-www-form-urlencoded'
         };
-        params = "pageId="+page.page_id+"&canonical_url="+page.canonical_url+"&title="+page.title+"&meta_description="+page.meta_description+"&robots="+page.robots;
+        params = "page_id="+page.page_id+"&canonical_url="+page.canonical_url+"&title="+page.title+"&meta_description="+page.meta_description+"&robots="+page.robots;
         mh = new MyHttp(url,method,headers,params);
         //display spinner while waiting the response
         spinner = document.getElementById('mte_page_edit_spinner');
@@ -79,6 +79,10 @@ function editPageMetaTags(page,url){
                 func_msg = new Message(result);
                 func_msg.parseText();
                 console.log(func_msg.message);
+                //Show dialog that print the message
+                func_dialog = new BsDialog('Modifica meta tag',func_msg.message,BsDialog.DLGTYPE_OK);
+                func_dialog.setDialog();
+                func_dialog.showDialog();
             })
             .catch(error => {
                 console.warn(error);

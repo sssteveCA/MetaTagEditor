@@ -71,7 +71,7 @@ function mte_enqueue_scripts(){
     $metaTagJs = $plugin_url.C::PLUGIN_JS_PATH1;
     //file_put_contents(C::LOG_FILE,$bsJs."\r\n",FILE_APPEND);
     wp_enqueue_style(C::H_BS_CSS,$bsCss,array(),null);
-    wp_enqueue_style(C::BS_JS_PATH,$bsJs,array(),null);
+    wp_enqueue_script(C::BS_JS_PATH,$bsJs,array(),null);
     wp_enqueue_style(C::H_CSS1,$metaTagCss,array(),null);
     wp_register_script(C::H_JS_BSDIALOG,$metaTagJsBsDialog,array(),null);
     wp_register_script(C::H_JS_MESSAGE,$metaTagJsMessage,array(),null);

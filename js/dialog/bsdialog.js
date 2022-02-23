@@ -58,7 +58,9 @@ class BsDialog{
         let show = false;
         this._errno = 0;
         if(this._html != null){
-            document.body.append(this._html);
+            let div = document.createElement('div');
+                div.innerHTML = this._html;
+            document.body.appendChild(div);
             let modalEl = document.getElementById('dialog');
             this._instance = new bootstrap.Modal(modalEl,{
                 focus : true

@@ -26,7 +26,7 @@ class MyMetaPage implements Mmp, C{
         'page_id' => '/^(?!\s*$).+$/',
         'canonical_url' => '/^(?!\s*$).+$/',
         'title' => '/^(?!\s*$).+$/',
-        'meta_description' => '/^(?!\s*$).$+/',
+        'meta_description' => '/^(?!\s*$).+$/',
         'robots' => '/^(?!\s*$).+$/'
     );
 

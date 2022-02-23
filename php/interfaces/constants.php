@@ -22,6 +22,7 @@ interface Constants{
     //Script handles
     const H_BS_CSS = "bootstrapCss";
     const H_BS_JS = "bootstrapJs";
+    const H_BS_BUNDLE_JS = "bootstrapBundleJs";
     const H_CSS1 = "metaTagStyle";
     const H_JS1 = "metaTagJs";
     const H_JS_BSDIALOG = "metaTagJsBsDialog";
