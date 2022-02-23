@@ -8,7 +8,8 @@ let arrLabels = {
 let arrValues;
 let container;
 let divLabel, divRow, divValue;
-let func_dialog,func_msg,func_page;
+let func_dialog,func_msg, func_nobtn;
+let func_okbtn, func_yesbtn,func_page;
 let headers,method,mh;
 let params,pagesList,response;
 let spinner;
@@ -83,6 +84,16 @@ function editPageMetaTags(page,url){
                 func_dialog = new BsDialog('Modifica meta tag',func_msg.message,BsDialog.DLGTYPE_OK);
                 func_dialog.setDialog();
                 func_dialog.showDialog();
+                //events on dialog buttons click
+                if(func_dialog.type == BsDialog.DLGTYPE_OK){
+                    func_okbtn = document.querySelector('.mte_okbutton');
+                    func_okbtn.onclick = function (){
+                        console.log("OnClick OK");
+                        //Close dialog and remove it
+                        func_dialog.instance.dispose();
+                        document.body.removeChild(func_dialog.divDialog);
+                    };
+                }
             })
             .catch(error => {
                 console.warn(error);

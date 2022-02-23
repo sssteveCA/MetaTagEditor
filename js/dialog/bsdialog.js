@@ -13,6 +13,7 @@ class BsDialog{
     static BTN_NO = 32; //'No' button pressed
 
     _bt_pressed; //button pressed
+    _div_dialog; //dialog container
     _errno;
     _instance; //Bootstrap dialog instance
     _message; //Dialog message
@@ -30,6 +31,7 @@ class BsDialog{
     }
 
     get btPressed(){return this._bt_pressed;}
+    get divDialog(){return this._div_dialog;}
     get errno(){return this._errno;}
     get html(){return this._html;}
     get instance(){return this._instance;}
@@ -58,9 +60,10 @@ class BsDialog{
         let show = false;
         this._errno = 0;
         if(this._html != null){
-            let div = document.createElement('div');
-                div.innerHTML = this._html;
-            document.body.appendChild(div);
+            this._div_dialog = document.createElement('div');
+                this._div_dialog.setAttribute('id','mte_div_dialog');
+                this._div_dialog.innerHTML = this._html;
+            document.body.appendChild(this._div_dialog);
             let modalEl = document.getElementById('dialog');
             this._instance = new bootstrap.Modal(modalEl,{
                 focus : true
@@ -87,7 +90,7 @@ class BsDialog{
                 <p>${this._message}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary okbutton">OK</button>
+                <button type="button" class="btn btn-primary mte_okbutton">OK</button>
             </div>
         </div>
     </div>
@@ -110,8 +113,8 @@ class BsDialog{
                 <p>${this._message}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary yesbutton">SÌ</button>
-                <button type="button" class="btn btn-secondary nobutton" data-bs-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-primary mte_yesbutton">SÌ</button>
+                <button type="button" class="btn btn-secondary mte_nobutton" data-bs-dismiss="modal">NO</button>
             </div>
         </div>
     </div>

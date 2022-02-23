@@ -25,6 +25,24 @@ function deleteMetaTagsPage(page_id,url,getAllUrl){
         f2_mh.response.then(result => {
             console.log(result);
             getAllPages(getAllUrl,url);
+            //get the message in JSON string
+            func_msg = new Message(result);
+            func_msg.parseText();
+            console.log(func_msg.message);
+            //Show dialog that print the message
+            func_dialog = new BsDialog('Elimina meta tag',func_msg.message,BsDialog.DLGTYPE_OK);
+            func_dialog.setDialog();
+            func_dialog.showDialog();
+            //events on dialog buttons click
+            if(func_dialog.type == BsDialog.DLGTYPE_OK){
+                func_okbtn = document.querySelector('.mte_okbutton');
+                func_okbtn.onclick = function (){
+                    console.log("OnClick OK");
+                    //Close dialog and remove it
+                    func_dialog.instance.dispose();
+                    document.body.removeChild(func_dialog.divDialog);
+                };
+            }
         })
         .catch(error => {
             console.warn(error);
