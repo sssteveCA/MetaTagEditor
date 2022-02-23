@@ -96,6 +96,53 @@ class MyMetaPage implements Mmp, C{
     public function getRobots(){return $this->robots;}
     public function getTitle(){return $this->title;}
 
+    //delete a row of the table with id passed
+    public function deleteMetaById(){
+        $ok = false;
+        $this->errno = 0;
+        if(isset($this->id)){
+            $ar = $this->wpdb->delete($this->table,array('id' => $this->id),array('%d'));
+            if($ar !== false){
+                //Query don't has errors
+                if($ar > 0){
+                    //One or more rows updated
+                    $ok = true;
+                }
+                else
+                    $this->errno = Mmp::ERR_NOROWSAFFECTED;
+            }//if($ar !== false){
+            else
+                $this->errno = Mmp::ERR_QUERYERROR;
+        }//if(isset($this->id)){
+        else
+            $this->errno = Mmp::ERR_MISSEDREQPARAMS;
+        return $ok;
+    }
+
+    //delete a row of the table with page id passed
+    public function deleteMetaByPageId(){
+        $ok = false;
+        $this->errno = 0;
+        if(isset($this->page_id)){
+            $ar = $this->wpdb->delete($this->table,array('page_id' => $this->page_id),array('%d'));
+            if($ar !== false){
+                //Query don't has errors
+                if($ar > 0){
+                    //One or more rows updated
+                    $ok = true;
+                }
+                else
+                    $this->errno = Mmp::ERR_NOROWSAFFECTED;
+            }//if($ar !== false){
+            else
+                $this->errno = Mmp::ERR_QUERYERROR;
+        }//if(isset($this->id)){
+        else
+            $this->errno = Mmp::ERR_MISSEDREQPARAMS;
+        return $ok;
+    }
+
+    //Insert or update a row of meta tag table
     public function editPageMeta(){
         $ok = false;
         $this->errno = 0;
