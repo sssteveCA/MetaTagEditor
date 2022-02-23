@@ -7,7 +7,8 @@ const labels = {
     'robots' : 'Robots'
 };
 let mte_btn_delete;
-let f2_headers,f2_method, f2_mh;
+let f2_bsdialog;
+let f2_headers,f2_method, f2_mh, f2_msg_ask_delete;
 let f2_pageslistDiv, f2_params, f2_del_spinner;
 let index;
 
@@ -37,10 +38,13 @@ function deleteMetaTagsPage(page_id,url,getAllUrl){
             if(func_dialog.type == BsDialog.DLGTYPE_OK){
                 func_okbtn = document.querySelector('.mte_okbutton');
                 func_okbtn.onclick = function (){
-                    console.log("OnClick OK");
                     //Close dialog and remove it
                     func_dialog.instance.dispose();
                     document.body.removeChild(func_dialog.divDialog);
+                    if(func_msg.done == true){
+                        //Update the pages list from database
+                        getAllPages(getAllUrl,url);
+                    }
                 };
             }
         })
@@ -132,10 +136,21 @@ function displayAllPagesEdited(pageList,deleteUrl,getAllUrl){
         mte_btn_delete = document.getElementById('mte_btn_delete');
         if(mte_btn_delete){
             mte_btn_delete.onclick = function(){
-                index = selectItem.value;
-                /*console.log("index => "+index);
-                console.log("page_id => "+list[index]["page_id"]);*/
-                deleteMetaTagsPage(list[index]["page_id"],deleteUrl,getAllUrl);
+                f2_msg_ask_delete = 'Sei sicuro di voler cancellare i meta tag della pagina modificati?';
+                f2_bsdialog = new BsDialog('Elimina meta tag',f2_msg_ask_delete,BsDialog.DLGTYPE_YESNO);
+                f2_bsdialog.setDialog();
+                f2_bsdialog.showDialog();
+                //Bootstrap dialog click events
+                f2_bsdialog.btYes.onclick = function(){
+                    f2_bsdialog.instance.dispose();
+                    document.body.removeChild(f2_bsdialog.divDialog);
+                    index = selectItem.value;
+                    deleteMetaTagsPage(list[index]["page_id"],deleteUrl,getAllUrl);
+                };//f2_bsdialog.btYes.onclick = function(){
+                f2_bsdialog.btNo.onclick = function(){
+                    f2_bsdialog.instance.dispose();
+                    document.body.removeChild(f2_bsdialog.divDialog);
+                };//f2_bsdialog.btNo.onclick = function(){
             };// mte_btn_delete.onclick = function(){
         }//if(mte_btn_delete){
     }//if(func2_pageslistDiv){

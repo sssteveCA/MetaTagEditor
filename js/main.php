@@ -17,8 +17,10 @@ let ajaxDelete = '{$ajaxDelete}';
 let ajaxGet = '{$ajaxGet}';
 let ajaxGetAll = '{$ajaxGetAll}';
 let ajaxSet = '{$ajaxSet}';
+let bsdialog; //BsDialog instance
 let bt_page_id_show, bt_page_edit; //Buttons for show page meta and for edit it
 let in_page_id_show; //Input field for page_id 
+let msg_ask_edit;
 let page; //Page class instance
 let main_page_id; //page_id value
 
@@ -37,14 +39,31 @@ document.addEventListener('DOMContentLoaded',function(){
     };//bt_page_id_show.onclick = function(){
     bt_page_edit.onclick = function (){
         //User wants edit meta tag page
-        page = new Page();
-        page.page_id = document.getElementById('mte_page_id_set').value;
-        page.canonical_url = document.getElementById('mte_canonical_url_edit').value;
-        page.title = document.getElementById('mte_title_edit').value;
-        page.meta_description = document.getElementById('mte_meta_description_edit').value;
-        page.robots = document.getElementById('mte_robots_edit').value;
-        console.log(page);
-        editPageMetaTags(page,ajaxSet);
+        msg_ask_edit = 'Sei sicuro di voler modificare i meta tag della pagina selezionata con questi dati?';
+        //Dialog ask confirm for do this operation
+        bsdialog = new BsDialog('Modifica meta tag',msg_ask_edit,BsDialog.DLGTYPE_YESNO);
+        bsdialog.setDialog();
+        bsdialog.showDialog();
+        //Bootstrap dialog click events
+        bsdialog.btYes.onclick = function (){
+            //User clicks 'YES'
+            bsdialog.instance.dispose();
+            document.body.removeChild(bsdialog.divDialog);
+            page = new Page();
+            page.page_id = document.getElementById('mte_page_id_set').value;
+            page.canonical_url = document.getElementById('mte_canonical_url_edit').value;
+            page.title = document.getElementById('mte_title_edit').value;
+            page.meta_description = document.getElementById('mte_meta_description_edit').value;
+            page.robots = document.getElementById('mte_robots_edit').value;
+            console.log(page);
+            editPageMetaTags(page,ajaxSet,ajaxGetAll,ajaxDelete);
+        };//bsdialog.btYes.onclick = function (){
+        bsdialog.btNo.onclick = function (){
+            //User clicks 'NO'
+            bsdialog.instance.dispose();
+            document.body.removeChild(bsdialog.divDialog);
+        };//bsDialog.btNo.onclick = function (){
+        
     };//bt_page_edit.onclick = function (){
 });
 JS;

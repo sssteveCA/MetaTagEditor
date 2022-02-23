@@ -9,13 +9,16 @@ class Message{
 
     _text;
     _message;
+    _done; //true if operation done successfully
     _errno;
 
     constructor(text){
         this._text = text;
         this._errno = 0;
+        this._done = false;
     }
 
+    get done(){return this._done;}
     get errno(){return this._errno;}
     get text(){return this._text;}
     get message(){return this._message;}
@@ -27,8 +30,9 @@ class Message{
         if(this._text != null){
             try{
                 let jsonObj = JSON.parse(this._text);
-                if(jsonObj.hasOwnProperty('msg')){
+                if(jsonObj.hasOwnProperty('msg') && jsonObj.hasOwnProperty('done')){
                     this._message = jsonObj['msg'];
+                    this._done = jsonObj['done'];
                 }
                 else
                     this._errno = Message.ERR_INVALIDCONTENT;

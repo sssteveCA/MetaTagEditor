@@ -12,7 +12,9 @@ class BsDialog{
     static BTN_YES = 31; //Yes button pressed
     static BTN_NO = 32; //'No' button pressed
 
-    _bt_pressed; //button pressed
+    _bt_no; //'No' button element object
+    _bt_ok; //OK button element object
+    _bt_yes; //Yes button element object
     _div_dialog; //dialog container
     _errno;
     _instance; //Bootstrap dialog instance
@@ -28,9 +30,15 @@ class BsDialog{
         this._html = null;
         this._errno = 0;
         this._action = null;
+        this._instance = null;
+        this._bt_no = null;
+        this._bt_ok = null;
+        this._bt_yes = null;
     }
 
-    get btPressed(){return this._bt_pressed;}
+    get btNo(){return this._bt_no;}
+    get btOk(){return this._bt_ok;}
+    get btYes(){return this._bt_yes;}
     get divDialog(){return this._div_dialog;}
     get errno(){return this._errno;}
     get html(){return this._html;}
@@ -69,6 +77,13 @@ class BsDialog{
                 focus : true
             });
             this._instance.show();
+            if(this._type == BsDialog.DLGTYPE_OK){
+                this._bt_ok = document.querySelector('.mte_okbutton');
+            }
+            else if(this._type == BsDialog.DLGTYPE_YESNO){
+                this._bt_yes = document.querySelector('.mte_yesbutton');
+                this._bt_no = document.querySelector('.mte_nobutton');
+            }
         }//if(this._html != null){
         else{
             this._errno = BsDialog.ERR_NOHTML;

@@ -59,7 +59,7 @@ function displayPageValues(page){
 }
 
 //insert or update the meta page values 
-function editPageMetaTags(page,url){
+function editPageMetaTags(page,url,getAllUrl,deleteUrl){
     if(page.notEmpty()){
         //all edit page field must be filled
         method = 'POST';
@@ -86,12 +86,16 @@ function editPageMetaTags(page,url){
                 func_dialog.showDialog();
                 //events on dialog buttons click
                 if(func_dialog.type == BsDialog.DLGTYPE_OK){
-                    func_okbtn = document.querySelector('.mte_okbutton');
-                    func_okbtn.onclick = function (){
+                    //func_okbtn = document.querySelector('.mte_okbutton');
+                    func_dialog.btOk.onclick = function (){
                         console.log("OnClick OK");
                         //Close dialog and remove it
                         func_dialog.instance.dispose();
                         document.body.removeChild(func_dialog.divDialog);
+                        if(func_msg.done == true){
+                            //Update the pages list from database
+                            getAllPages(getAllUrl,deleteUrl);
+                        }
                     };
                 }
             })
