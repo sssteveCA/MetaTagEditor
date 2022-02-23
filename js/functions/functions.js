@@ -8,7 +8,7 @@ let arrLabels = {
 let arrValues;
 let container;
 let divLabel, divRow, divValue;
-let func_page;
+let func_msg,func_page;
 let headers,method,mh;
 let params,pagesList,response;
 let spinner;
@@ -75,6 +75,10 @@ function editPageMetaTags(page,url){
         if(mh.response != null){
             mh.response.then(result => {
                 console.log(result);
+                //get the message in JSON string
+                func_msg = new Message(result);
+                func_msg.parseText();
+                console.log(func_msg.message);
             })
             .catch(error => {
                 console.warn(error);
