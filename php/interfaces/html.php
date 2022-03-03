@@ -82,7 +82,7 @@ interface Html{
                                 <label class="mte_nobold" for="mte_cb_nosnippet">nosnippet</label>
                             </div>
                             <div>
-                                <input class="mr-2" type="checkbox" id="mte_cb_indexifembedded" name="indexifembedded">
+                                <input class="mr-2" type="checkbox" id="mte_cb_indexifembedded" name="indexifembedded" disabled>
                                 <label class="mte_nobold" for="mte_cb_indexifembedded">indexifembedded</label>
                             </div>
                             <div class="row mt-2">
@@ -127,7 +127,7 @@ interface Html{
                                     <label class="mte_nobold" for="mte_cb_unavailableafter">unavailable_after</label>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="datetime-local" id="mte_unavailableafter" name="unavailableafter">
+                                    <input type="datetime-local" id="mte_input_unavailableafter" name="unavailableafter" disabled>
                                 </div>
                             </div>
                         </div>

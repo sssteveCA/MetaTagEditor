@@ -20,6 +20,9 @@ let ajaxSet = '{$ajaxSet}';
 let bsdialog; //BsDialog instance
 let bt_page_id_show, bt_page_edit; //Buttons for show page meta and for edit it
 let in_page_id_show; //Input field for page_id 
+let mte_cb_noindex, mte_cb_nofollow, mte_cb_noarchive,mte_cb_nosnippet;
+let mte_cb_indexifembedded, mte_maxsnippet, mte_sel_maximagepreview, mte_maxvideopreview;
+let mte_cb_notranslate, mte_cb_noimageindex, mte_cb_unavailableafter, mte_input_unavailableafter;
 let msg_ask_edit;
 let page; //Page class instance
 let main_page_id; //page_id value
@@ -29,9 +32,31 @@ let main_page_id; //page_id value
 document.addEventListener('DOMContentLoaded',function(){
     //Request for retrieving meta tags from plugin MySQL table
     getAllPages(ajaxGetAll,ajaxDelete);
+    assignElement();
+    buttonEvents();
+    inputEvents();
+});
+
+function assignElement(){
     in_page_id_show = document.getElementById('mte_page_id_get');
     bt_page_id_show = document.getElementById('mte_btn_show');
     bt_page_edit = document.getElementById('mte_btn_edit');
+    mte_cb_noindex = document.getElementById('mte_cb_noindex'); 
+    mte_cb_nofollow = document.getElementById('mte_cb_nofollow');
+    mte_cb_noarchive = document.getElementById('mte_cb_noarchive');
+    mte_cb_nosnippet = document.getElementById('mte_cb_nosnippet');
+    mte_cb_indexifembedded = document.getElementById('mte_cb_indexifembedded');
+    mte_maxsnippet = document.getElementById('mte_maxsnippet');
+    mte_sel_maximagepreview = document.getElementById('mte_sel_maximagepreview');
+    mte_maxvideopreview = document.getElementById('mte_maxvideopreview');
+    mte_cb_notranslate = document.getElementById('mte_cb_notranslate');  
+    mte_cb_noimageindex = document.getElementById('mte_cb_noimageindex'); 
+    mte_cb_unavailableafter = document.getElementById('mte_cb_unavailableafter');  
+    mte_input_unavailableafter = document.getElementById('mte_input_unavailableafter'); 
+}
+
+//Button events function
+function buttonEvents(){
     bt_page_id_show.onclick = function(){
         //User wants to show meta tags info about a particular page
         main_page_id = in_page_id_show.value;
@@ -54,7 +79,9 @@ document.addEventListener('DOMContentLoaded',function(){
             page.canonical_url = document.getElementById('mte_canonical_url_edit').value;
             page.title = document.getElementById('mte_title_edit').value;
             page.meta_description = document.getElementById('mte_meta_description_edit').value;
-            page.robots = document.getElementById('mte_robots_edit').value;
+            page.robots = {
+
+            };
             console.log(page);
             editPageMetaTags(page,ajaxSet,ajaxGetAll,ajaxDelete);
         };//bsdialog.btYes.onclick = function (){
@@ -62,10 +89,32 @@ document.addEventListener('DOMContentLoaded',function(){
             //User clicks 'NO'
             bsdialog.instance.dispose();
             document.body.removeChild(bsdialog.divDialog);
-        };//bsDialog.btNo.onclick = function (){
-        
+        };//bsDialog.btNo.onclick = function (){       
     };//bt_page_edit.onclick = function (){
-});
+}
+
+//Input events function
+function inputEvents(){
+    mte_cb_noindex.onchange = function (){
+        if(mte_cb_noindex.checked){
+            //indexifembedded option enabled if noindex checknox is checked
+            mte_cb_indexifembedded.disabled = false;
+        }
+        else{
+            mte_cb_indexifembedded.checked = false;
+            mte_cb_indexifembedded.disabled = true;
+        }
+    };//mte_cb_noindex.onchange = function (){
+    mte_cb_unavailableafter.onchange = function (){
+        if(mte_cb_unavailableafter.checked){
+            //unavailableafter input enabled if unavailableafter checkbox is checked
+            mte_input_unavailableafter.disabled = false;
+        }
+        else{
+            mte_input_unavailableafter.disabled = true;
+        }
+    };//mte_cb_unavailableafter.onchange = function (){
+}
 JS;
 
 echo $js;
