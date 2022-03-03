@@ -1,4 +1,12 @@
 
+select{
+    width: 192px !important;
+}
+
 div#mte_page_meta_tags{
     height: 250px;
+}
+
+div.mte_data label:not(.mte_nobold), .mte_bold{
+    font-weight: bold;
 }

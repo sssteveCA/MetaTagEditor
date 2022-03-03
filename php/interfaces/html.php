@@ -64,31 +64,78 @@ interface Html{
                             <input class="w-75" type="text" id="mte_meta_description_edit">
                         </div>
                         <div class="col-12 text-start m-2">
-                            <label for="mte_robots_edit">Direttive Robots</label>
-                        </div>
-                        <div class="col-12 text-start ms-2 mt-0">
+                            <div class="mte_bold">Direttive robots</div>
                             <div>
                                 <input class="mr-2" type="checkbox" id="mte_cb_noindex" name="noindex">
-                                <label for="mte_cb_noindex">noindex</label>
+                                <label class="mte_nobold" for="mte_cb_noindex">noindex</label>
                             </div>
                             <div>
-                                <input class="mr-2" type="checkbox" id="mte_cb_noindex" name="noindex">
-                                <label for="mte_cb_noindex">noindex</label>
+                                <input class="mr-2" type="checkbox" id="mte_cb_nofollow" name="nofollow">
+                                <label class="mte_nobold" for="mte_cb_nofollow">nofollow</label>
                             </div>
                             <div>
-                                <input class="mr-2" type="checkbox" id="mte_cb_noindex" name="noindex">
-                                <label for="mte_cb_noindex">noindex</label>
+                                <input class="mr-2" type="checkbox" id="mte_cb_noarchive" name="noarchive">
+                                <label class="mte_nobold" for="mte_cb_noarchive">noarchive</label>
                             </div>
                             <div>
-                                <input class="mr-2" type="checkbox" id="mte_cb_noindex" name="noindex">
-                                <label for="mte_cb_noindex">noindex</label>
+                                <input class="mr-2" type="checkbox" id="mte_cb_nosnippet" name="nosnippet">
+                                <label class="mte_nobold" for="mte_cb_nosnippet">nosnippet</label>
+                            </div>
+                            <div>
+                                <input class="mr-2" type="checkbox" id="mte_cb_indexifembedded" name="indexifembedded">
+                                <label class="mte_nobold" for="mte_cb_indexifembedded">indexifembedded</label>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-sm-6">
+                                    <label class="mte_nobold" class="mr-2" for="mte_maxsnippet">max-snippet</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input type="number" id="mte_maxsnippet" name="maxsnippet" value="-1">
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-sm-6">
+                                    <label class="mte_nobold" for="mte_sel_maximagepreview">max-image-preview</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <select id="mte_sel_maximagepreview" class="form-select form-select-sm" name="maximagepreview">
+                                        <option value="none">none</option>
+                                        <option value="standard" selected>standard</option>
+                                        <option value="large">large</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-sm-6">
+                                    <label class="mte_nobold" class="mr-2" for="mte_maxvideopreview">max-video-preview</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input type="number" id="mte_maxvideopreview" name="maxvideopreview" value="-1">
+                                </div>
+                            </div>
+                            <div>
+                                <input class="mr-2" type="checkbox" id="mte_cb_notranslate" name="notranslate">
+                                <label class="mte_nobold" for="mte_cb_notranslate">notranslate</label>
+                            </div>
+                            <div>
+                                <input class="mr-2" type="checkbox" id="mte_cb_noimageindex" name="noimageindex">
+                                <label class="mte_nobold" for="mte_cb_noimageindex">noimageindex</label>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-sm-6">
+                                    <input class="mr-2" type="checkbox" id="mte_cb_unavailableafter" name="unavailableafter">
+                                    <label class="mte_nobold" for="mte_cb_unavailableafter">unavailable_after</label>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input type="datetime-local" id="mte_unavailableafter" name="unavailableafter">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Contain input field to delete custom meta page value -->
-            <div id="mte_pagelist_collections" class="row">
+            <div id="mte_pagelist_collections" class="row mt-4">
                 <!-- <div class="col-12 col-sm-4 text-center text-sm-start mt-4 mb-2">
                     <input type="number" id="mte_page_id_delete" name="page_id_delete" placeholder="ID della pagina da cancellare">
                 </div>

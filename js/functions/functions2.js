@@ -66,7 +66,7 @@ function displayAllPagesEdited(pageList,deleteUrl,getAllUrl){
     if(f2_pageslistDiv){
         f2_pageslistDiv.innerHTML = '';
             let divSelectLabel = document.createElement('div');
-            divSelectLabel.classList.add('col-12','col-sm-2','text-center','text-sm-start','mt-4','mb-2');
+            divSelectLabel.classList.add('col-12','col-sm-2','text-center','text-sm-start','mt-4','mb-2','mte_bold');
             divSelectLabel.innerText = 'ID della pagina';
             divSelectLabel.style.position = 'relative';
             divSelectLabel.style.left = '6px';
