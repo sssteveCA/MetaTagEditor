@@ -1,0 +1,1 @@
+full canonical => http://localhost/wordpress/ciao/cazzo/

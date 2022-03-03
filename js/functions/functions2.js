@@ -47,7 +47,7 @@ function deleteMetaTagsPage(page_id,url,getAllUrl){
                     }
                 };
             }
-        })
+        })//f2_mh.response.then(result => {
         .catch(error => {
             console.warn(error);
         })

@@ -22,13 +22,14 @@ class MyMetaPage implements Mmp, C{
     private $wpdb; //Wordpress database instance
     //check if properties match with these patterns
     private static $regex = array(
-        'id' => '/^(?!\s*$).+$/',
-        'page_id' => '/^(?!\s*$).+$/',
-        'canonical_url' => '/^(?!\s*$).+$/',
-        'title' => '/^(?!\s*$).+$/',
-        'meta_description' => '/^(?!\s*$).+$/',
+        'id' => '/^[0-9]+$/', //only numbers
+        'page_id' => '/^[0-9]+$/', //only numbers
+        'canonical_url' => '/^\/([a-zA-Z0-9_-]+\/){0,}[a-zA-Z0-9_-]+\/?$/', //realtive URL
+        'title' => '/^(?!\s*$).+$/', //at least one character except blanks
+        'meta_description' => '/^(?!\s*$).+$/', //at least one character except blanks
         'robots' => '/^(?!\s*$).+$/'
     );
+    private static $logFile = "log.txt";
 
     public function __construct($dati)
     {
@@ -163,13 +164,16 @@ class MyMetaPage implements Mmp, C{
         $this->errno = 0;
         if($this->editValidation()){
             //validation passed
+            //concatenate root URL to relative path of page
+            $full_canonical = get_home_url().$this->canonical_url;
+            file_put_contents(MyMetaPage::$logFile,"full canonical => {$full_canonical}\r\n",FILE_APPEND);
             $sql = <<<SQL
 INSERT INTO `{$this->table}` (`page_id`,`canonical_url`,`title`,`meta_description`,`robots`)
 VALUES (%d,%s,%s,%s,%s)
 ON DUPLICATE KEY UPDATE `canonical_url`= %s,`title`= %s,`meta_description`= %s,`robots`= %s;
 SQL;
-            $this->query = $this->wpdb->prepare($sql,$this->page_id,$this->canonical_url,$this->title,$this->meta_description,$this->robots,
-                            $this->canonical_url,$this->title,$this->meta_description,$this->robots);
+            $this->query = $this->wpdb->prepare($sql,$this->page_id,$full_canonical,$this->title,$this->meta_description,$this->robots,
+                            $full_canonical,$this->title,$this->meta_description,$this->robots);
             $affected_rows = $this->wpdb->query($this->query);
             if($affected_rows !== false){
                 if($affected_rows > 0){

@@ -98,7 +98,7 @@ function editPageMetaTags(page,url,getAllUrl,deleteUrl){
                         }
                     };
                 }
-            })
+            })//mh.response.then(result => {
             .catch(error => {
                 console.warn(error);
             })
