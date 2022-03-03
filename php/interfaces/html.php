@@ -45,29 +45,44 @@ interface Html{
                 <!-- Contains input fields to edit meta tags -->
                 <div class="mte_data col-12">
                     <div class="row">
-                        <div class="col-12 col-md-5 text-center text-md-start m-2">
+                        <div class="col-12 text-start m-2">
                             <label for="mte_canonical_url_edit">URL canonico</label> 
                         </div>
-                        <div class="col-12 offset-md-1 col-md-5 text-center text-md-start m-2">
-                            <input type="text" id="mte_canonical_url_edit">
+                        <div class="col-12 text-start ms-2 mt-0">
+                            <input class="w-75" type="text" id="mte_canonical_url_edit">
                         </div>
-                        <div class="col-12 col-md-5 text-center text-md-start m-2">
+                        <div class="col-12 text-start m-2">
                             <label for="mte_title_edit">Titolo</label>
                         </div>
-                        <div class="col-12 offset-md-1 col-md-5 text-center text-md-start m-2">
-                            <input type="text" id="mte_title_edit">
+                        <div class="col-12 text-start ms-2 mt-0">
+                            <input class="w-75" type="text" id="mte_title_edit">
                         </div>
-                        <div class="col-12 col-md-5 text-center text-md-start m-2">
+                        <div class="col-12 text-start m-2">
                             <label for="mte_meta_description_edit">Meta description</label>
                         </div>
-                        <div class="col-12 offset-md-1 col-md-5 text-center text-md-start m-2">
-                            <input type="text" id="mte_meta_description_edit">
+                        <div class="col-12 text-start ms-2 mt-0">
+                            <input class="w-75" type="text" id="mte_meta_description_edit">
                         </div>
-                        <div class="col-12 col-md-5 text-center text-md-start m-2">
-                            <label for="mte_robots_edit">Robots</label>
+                        <div class="col-12 text-start m-2">
+                            <label for="mte_robots_edit">Direttive Robots</label>
                         </div>
-                        <div class="col-12 offset-md-1 col-md-5 text-center text-md-start m-2">
-                            <input type="text" id="mte_robots_edit">
+                        <div class="col-12 text-start ms-2 mt-0">
+                            <div>
+                                <input class="mr-2" type="checkbox" id="mte_cb_noindex" name="noindex">
+                                <label for="mte_cb_noindex">noindex</label>
+                            </div>
+                            <div>
+                                <input class="mr-2" type="checkbox" id="mte_cb_noindex" name="noindex">
+                                <label for="mte_cb_noindex">noindex</label>
+                            </div>
+                            <div>
+                                <input class="mr-2" type="checkbox" id="mte_cb_noindex" name="noindex">
+                                <label for="mte_cb_noindex">noindex</label>
+                            </div>
+                            <div>
+                                <input class="mr-2" type="checkbox" id="mte_cb_noindex" name="noindex">
+                                <label for="mte_cb_noindex">noindex</label>
+                            </div>
                         </div>
                     </div>
                 </div>

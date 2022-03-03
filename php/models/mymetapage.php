@@ -165,15 +165,15 @@ class MyMetaPage implements Mmp, C{
         if($this->editValidation()){
             //validation passed
             //concatenate root URL to relative path of page
-            $full_canonical = get_home_url().$this->canonical_url;
-            file_put_contents(MyMetaPage::$logFile,"full canonical => {$full_canonical}\r\n",FILE_APPEND);
+            $this->canonical_url = get_home_url().$this->canonical_url;
+            file_put_contents(MyMetaPage::$logFile,"full canonical => {$this->canonical}\r\n",FILE_APPEND);
             $sql = <<<SQL
 INSERT INTO `{$this->table}` (`page_id`,`canonical_url`,`title`,`meta_description`,`robots`)
 VALUES (%d,%s,%s,%s,%s)
 ON DUPLICATE KEY UPDATE `canonical_url`= %s,`title`= %s,`meta_description`= %s,`robots`= %s;
 SQL;
-            $this->query = $this->wpdb->prepare($sql,$this->page_id,$full_canonical,$this->title,$this->meta_description,$this->robots,
-                            $full_canonical,$this->title,$this->meta_description,$this->robots);
+            $this->query = $this->wpdb->prepare($sql,$this->page_id,$this->canonical,$this->title,$this->meta_description,$this->robots,
+                            $this->canonical,$this->title,$this->meta_description,$this->robots);
             $affected_rows = $this->wpdb->query($this->query);
             if($affected_rows !== false){
                 if($affected_rows > 0){
