@@ -20,7 +20,7 @@ class Page{
         this._canonical_url = canonical_url;
         this._title = title;
         this._meta_description = meta_description;
-        this._robots = robots;
+        this._robots = robots; // array
         this._errno = 0;
     }
 

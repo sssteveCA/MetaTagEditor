@@ -64,9 +64,23 @@ function editPageMetaTags(page,url,getAllUrl,deleteUrl){
         //all edit page field must be filled
         method = 'POST';
         headers = {
-                'Content-Type' : 'application/x-www-form-urlencoded'
+                //'Content-Type' : 'application/x-www-form-urlencoded'
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
         };
-        params = "page_id="+page.page_id+"&canonical_url="+page.canonical_url+"&title="+page.title+"&meta_description="+page.meta_description+"&robots="+page.robots;
+        params = {
+            'page_id' : page.page_id,
+            'canonical_url' : page.canonical_url,
+            'title' : page.title,
+            'meta_description' : page.meta_description,
+            'robots' : page.robots
+        };
+        console.log("editPageMetaTags params");
+        console.log(params);
+        params = JSON.stringify(params);
+        console.log("editPageMetaTags params stringify");
+        console.log(params);
+        //params = "page_id="+page.page_id+"&canonical_url="+page.canonical_url+"&title="+page.title+"&meta_description="+page.meta_description+"&robots="+page.robots;
         mh = new MyHttp(url,method,headers,params);
         //display spinner while waiting the response
         spinner = document.getElementById('mte_page_edit_spinner');

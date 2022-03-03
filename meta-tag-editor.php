@@ -105,7 +105,7 @@ function mte_main_menu(){
 }
 
 //add tag to <script>
-add_filter('script_loader_tag','mte_add_tags',10,3);
+//add_filter('script_loader_tag','mte_add_tags',10,3);
 function mte_add_tags($tag,$handle,$src){
     file_put_contents(C::LOG_FILE,"mte_add_tags\n",FILE_APPEND);
     if($handle == C::H_JS_MYHTTP){ //This is Js MyHttp class that must be imported
@@ -139,7 +139,7 @@ function mte_edit_robots($robots){
     return $robots;
 }
 
-add_filter('wpseo_tile','mte_edit_title');
+add_filter('wpseo_title','mte_edit_title');
 function mte_edit_title($title){
     file_put_contents(C::LOG_FILE,"mte_edit_title\r\n",FILE_APPEND);
     file_put_contents(C::LOG_FILE,"Titolo => {$title}\r\n",FILE_APPEND);

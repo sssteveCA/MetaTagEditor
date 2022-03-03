@@ -80,7 +80,18 @@ function buttonEvents(){
             page.title = document.getElementById('mte_title_edit').value;
             page.meta_description = document.getElementById('mte_meta_description_edit').value;
             page.robots = {
-
+                'noindex' : mte_cb_noindex.checked,
+                'nofollow' : mte_cb_nofollow.checked,
+                'noarchive' : mte_cb_noarchive.checked,
+                'nosnippet' : mte_cb_nosnippet.checked,
+                'indexifembedded' : mte_cb_indexifembedded.checked,
+                'maxsnippet' : mte_maxsnippet.value,
+                'maximagepreview' : mte_sel_maximagepreview.value,
+                'maxvideopreview' : mte_maxvideopreview.value,
+                'notranslate' : mte_cb_notranslate.checked,
+                'noimageindex' : mte_cb_noimageindex.checked,
+                'cb_unavailableafter' : mte_cb_unavailableafter.checked,
+                'unavailableafter' : mte_input_unavailableafter.value
             };
             console.log(page);
             editPageMetaTags(page,ajaxSet,ajaxGetAll,ajaxDelete);
