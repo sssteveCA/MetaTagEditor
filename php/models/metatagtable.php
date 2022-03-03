@@ -17,7 +17,7 @@ class MetaTagTable implements Mmt{
     private $errno;
     private $error;
 
-    public function __construct($dati){
+    public function __construct($dati = array()){
         global $wpdb;
         $this->wpdb = $wpdb;
         $this->query = null;

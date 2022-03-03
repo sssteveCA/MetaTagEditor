@@ -75,7 +75,7 @@ function setRobotsString($robots){
     if($robots['noimageindex'] == true){$robotsArray[] = 'noimageindex';}
     if($robots["cb_unavailableafter"] == true){$robotsArray[] = "unavailable_after:{$robots['unavailableafter']}";}
     $robotsString = implode(", ",$robotsArray);
-    file_put_contents(C::LOG_FILE,"robotsString => {$robotsString}\r\n",FILE_APPEND);
+    //file_put_contents(C::LOG_FILE,"robotsString => {$robotsString}\r\n",FILE_APPEND);
     return $robotsString;
 }
 ?>

@@ -15,14 +15,18 @@
 require_once('php/interfaces/constants.php');
 require_once('php/interfaces/html.php');
 require_once('php/interfaces/messages.php');
+require_once('php/interfaces/mmt_errors.php');
+require_once('php/models/metatagtable.php');
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 
 use MetaTagEditor\Interfaces\Constants as C;
 use MetaTagEditor\Interfaces\Html as H;
 use MetaTagEditor\Interfaces\Messages as M;
+use MetaTagEditor\Models\MetaTagTable as Mmt;
 
 $home = get_home_url();
 $plugin_url = plugins_url();
+$mmt = new Mmt();
 
 //When plugin is activated
 register_activation_hook(__FILE__, 'mte_activator');
@@ -104,45 +108,68 @@ function mte_main_menu(){
     echo H::MAIN_MENU;
 }
 
-//add tag to <script>
-//add_filter('script_loader_tag','mte_add_tags',10,3);
-function mte_add_tags($tag,$handle,$src){
-    file_put_contents(C::LOG_FILE,"mte_add_tags\n",FILE_APPEND);
-    if($handle == C::H_JS_MYHTTP){ //This is Js MyHttp class that must be imported
-        //$tag = '<script type="module" src="'.esc_url($src).'"></script>';
-    }//if($handle != ''){
-    if($handle == C::H_JS1){
-        //$tag = '<script type="module" src="'.esc_url($src).'"></script>';
-    }
-    return $tag;
+//Get the data of the table that contains meta tags values of pages present
+add_action('wp','mte_load_table');
+function mte_load_table(){
+    //global $mmt;
+    if(is_page() || is_single()){
+        //file_put_contents(C::LOG_FILE,"Is page or single\r\n",FILE_APPEND);
+        //If current link is of a page or a article
+        $id = get_the_ID();
+        $title = get_the_title();
+        $guid = get_the_guid();
+        $type = get_post_type();
+        $stato = get_post_status();
+        $creation_time = get_the_date();
+        $modified_time = get_the_modified_date();
+        file_put_contents(C::LOG_FILE,"Id =>{$id}\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Titolo =>{$title}\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Guid =>{$guid}\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Tipo =>{$type}\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Stato =>{$stato}\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Data creazione =>{$creation_time}\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Ultima modifica =>{$modified_time}\r\n",FILE_APPEND);
+    }//if(is_page() || is_single()){
 }
 
 //Yoast SEO meta tags filters
 add_filter('wpseo_canonical','mte_edit_canonical');
 function mte_edit_canonical($canonical){
-    file_put_contents(C::LOG_FILE,"mte_edit_canonical\r\n",FILE_APPEND);
-    file_put_contents(C::LOG_FILE,"Canonical => {$canonical}\r\n",FILE_APPEND);
+    if(is_page() || is_single()){
+        //If current link is of a page or a article
+        file_put_contents(C::LOG_FILE,"mte_edit_canonical\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Canonical => {$canonical}\r\n",FILE_APPEND);
+    }
     return $canonical;
 }
 
 add_filter('wpseo_metadesc','mte_edit_description');
 function mte_edit_description($description){
-    file_put_contents(C::LOG_FILE,"mte_edit_description\r\n",FILE_APPEND);
-    file_put_contents(C::LOG_FILE,"Descrizione => {$description}\r\n",FILE_APPEND);
+    if(is_page() || is_single()){
+        //If current link is of a page or a article
+        file_put_contents(C::LOG_FILE,"mte_edit_description\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Descrizione => {$description}\r\n",FILE_APPEND);
+    }
     return $description;
 }
 
 add_filter('wpseo_robots','mte_edit_robots');
 function mte_edit_robots($robots){
-    file_put_contents(C::LOG_FILE,"mte_edit_robots\r\n",FILE_APPEND);
-    file_put_contents(C::LOG_FILE,"Robots => {$robots}\r\n",FILE_APPEND);
+    if(is_page() || is_single()){
+        //If current link is of a page or a article
+        file_put_contents(C::LOG_FILE,"mte_edit_robots\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Robots => {$robots}\r\n",FILE_APPEND);
+    }
     return $robots;
 }
 
 add_filter('wpseo_title','mte_edit_title');
 function mte_edit_title($title){
-    file_put_contents(C::LOG_FILE,"mte_edit_title\r\n",FILE_APPEND);
-    file_put_contents(C::LOG_FILE,"Titolo => {$title}\r\n",FILE_APPEND);
+    if(is_page() || is_single()){
+        //If current link is of a page or a article
+        file_put_contents(C::LOG_FILE,"mte_edit_title\r\n",FILE_APPEND);
+        file_put_contents(C::LOG_FILE,"Titolo => {$title}\r\n",FILE_APPEND);
+    }
     return $title;
 }
 ?>
