@@ -26,7 +26,10 @@ use MetaTagEditor\Models\MetaTagTable as Mmt;
 
 $home = get_home_url();
 $plugin_url = plugins_url();
-$mmt = new Mmt();
+$mmt = null; //MetaTagTable object
+$found = false; //true if post_id of page is found on database
+$pages = array(); //this array contains info of the pages retrieved from DB
+$pageFound = array(); //if page_id match the current post id, this array contains meta info of that page
 
 //When plugin is activated
 register_activation_hook(__FILE__, 'mte_activator');
@@ -112,63 +115,91 @@ function mte_main_menu(){
 add_action('wp','mte_load_table');
 function mte_load_table(){
     //global $mmt;
-    if(is_page() || is_single()){
-        //file_put_contents(C::LOG_FILE,"Is page or single\r\n",FILE_APPEND);
+    global $found,$mmt,$pageFound,$pages,$post;
+    if(is_admin() || is_page() || is_single()){
         //If current link is of a page or a article
-        $id = get_the_ID();
-        $title = get_the_title();
-        $guid = get_the_guid();
-        $type = get_post_type();
-        $stato = get_post_status();
-        $creation_time = get_the_date();
-        $modified_time = get_the_modified_date();
-        file_put_contents(C::LOG_FILE,"Id =>{$id}\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Titolo =>{$title}\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Guid =>{$guid}\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Tipo =>{$type}\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Stato =>{$stato}\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Data creazione =>{$creation_time}\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Ultima modifica =>{$modified_time}\r\n",FILE_APPEND);
+        //file_put_contents(C::LOG_FILE,"post => ".var_export($post,true)."\r\n",FILE_APPEND);
+        try{
+            $mmt = new Mmt();
+            $get = $mmt->getDataFromDb();
+            if($get){
+                //Data retrieved from DB
+                $pages = $mmt->getPages();
+                if($pages !== null){
+                    //file_put_contents(C::LOG_FILE,"pages => ".var_export($pages,true)."\r\n",FILE_APPEND);
+                    foreach($pages as $n => $page){
+                        //loop to find if current post id is found in pages array
+                        if($page['page_id'] == $post->ID){
+                            $found = true;
+                            $pageFound = array(
+                                'id' => $page['id'],
+                                'page_id' => $page['page_id'],
+                                'canonical_url' => $page['canonical_url'],
+                                'title' => $page['title'],
+                                'meta_description' => $page['meta_description'],
+                                'robots' => $page['robots']
+                            );
+                            //file_put_contents(C::LOG_FILE,"pageFound => ".var_export($pageFound,true)."\r\n",FILE_APPEND);
+                            break;
+                        }//if($page['page_id'] == $post->ID){
+                    }//foreach($pages as $n => $page){
+                }//if($pages !== null){
+            }//if($get){
+        }catch(Exception $e){
+            file_put_contents(C::LOG_FILE,"mte_load_table errore => ".$e->getMessage());
+        }
     }//if(is_page() || is_single()){
 }
 
 //Yoast SEO meta tags filters
 add_filter('wpseo_canonical','mte_edit_canonical');
 function mte_edit_canonical($canonical){
-    if(is_page() || is_single()){
-        //If current link is of a page or a article
+    global $found, $pageFound;
+    if(is_admin() || is_page() || is_single()){
+        //If current link is of admin backend, a page or a article
         file_put_contents(C::LOG_FILE,"mte_edit_canonical\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Canonical => {$canonical}\r\n",FILE_APPEND);
+        //file_put_contents(C::LOG_FILE,"Canonical => {$canonical}\r\n",FILE_APPEND);
+        if($found) //current post_id has been found in database
+            $canonical = $pageFound['canonical_url'];
     }
     return $canonical;
 }
 
 add_filter('wpseo_metadesc','mte_edit_description');
 function mte_edit_description($description){
-    if(is_page() || is_single()){
-        //If current link is of a page or a article
+    global $found, $pageFound;
+    if(is_admin() || is_page() || is_single()){
+        //If current link is of admin backend, a page or a article
         file_put_contents(C::LOG_FILE,"mte_edit_description\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Descrizione => {$description}\r\n",FILE_APPEND);
+        //file_put_contents(C::LOG_FILE,"Descrizione => {$description}\r\n",FILE_APPEND);
+        if($found) //current post_id has been found in database
+            $description = $pageFound['meta_description'];   
     }
     return $description;
 }
 
 add_filter('wpseo_robots','mte_edit_robots');
 function mte_edit_robots($robots){
-    if(is_page() || is_single()){
-        //If current link is of a page or a article
+    global $found, $pageFound;
+    if(is_admin() || is_page() || is_single()){
+        //If current link is of admin backend, a page or a article
         file_put_contents(C::LOG_FILE,"mte_edit_robots\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Robots => {$robots}\r\n",FILE_APPEND);
+        //file_put_contents(C::LOG_FILE,"Robots => {$robots}\r\n",FILE_APPEND);
+        if($found) //current post_id has been found in database
+            $robots = $pageFound['robots'];
     }
     return $robots;
 }
 
 add_filter('wpseo_title','mte_edit_title');
 function mte_edit_title($title){
-    if(is_page() || is_single()){
-        //If current link is of a page or a article
+    global $found, $pageFound;
+    if(is_admin() || is_page() || is_single()){
+        //If current link is of admin backend, a page or a article
         file_put_contents(C::LOG_FILE,"mte_edit_title\r\n",FILE_APPEND);
-        file_put_contents(C::LOG_FILE,"Titolo => {$title}\r\n",FILE_APPEND);
+        //file_put_contents(C::LOG_FILE,"Titolo => {$title}\r\n",FILE_APPEND);
+        if($found) //current post_id has been found in database
+            $title = $pageFound['title'];
     }
     return $title;
 }
