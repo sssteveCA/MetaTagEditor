@@ -75,11 +75,13 @@ function mte_enqueue_scripts(){
     $metaTagJsMyHttp = $plugin_url.C::PLUGIN_JS_MYHTTP;
     $metaTagJsPage = $plugin_url.C::PLUGIN_JS_PAGE;
     $metaTagJsPages = $plugin_url.C::PLUGIN_JS_PAGELIST;
+    $metaTagJsVariables = $plugin_url.C::PLUGIN_JS_VARIABLES;
     $metaTagJs = $plugin_url.C::PLUGIN_JS_PATH1;
     //file_put_contents(C::LOG_FILE,$bsJs."\r\n",FILE_APPEND);
     wp_enqueue_style(C::H_BS_CSS,$bsCss,array(),null);
     wp_enqueue_script(C::BS_JS_PATH,$bsJs,array(),null);
     wp_enqueue_style(C::H_CSS1,$metaTagCss,array(),null);
+    wp_register_script(C::H_JS_VARIABLES,$metaTagJsVariables,array(),null);
     wp_register_script(C::H_JS_BSDIALOG,$metaTagJsBsDialog,array(),null);
     wp_register_script(C::H_JS_MESSAGE,$metaTagJsMessage,array(),null);
     wp_register_script(C::H_JS_PAGE,$metaTagJsPage,array(),null);
@@ -95,6 +97,7 @@ function mte_enqueue_scripts(){
         C::H_JS_MYHTTP,
         C::H_JS_PAGE,
         C::H_JS_PAGELIST,
+        C::H_JS_VARIABLES
         );
     wp_enqueue_script(C::H_JS1,$metaTagJs,$hjs1_deps,null);
 }

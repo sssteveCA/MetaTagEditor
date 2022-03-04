@@ -66,8 +66,8 @@ class Message{
                 console.warn(e);
                 if(e instanceof SyntaxError)
                     this._errno = Message.ERR_INVALIDJSON;
-                else
-                    this._errno = Message.ERR_UNKNOWNERROR;
+                /*else
+                    this._errno = Message.ERR_UNKNOWNERROR;*/
             }
         }//if(this._text != null){
         else

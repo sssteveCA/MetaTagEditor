@@ -17,17 +17,6 @@ let ajaxDelete = '{$ajaxDelete}';
 let ajaxGet = '{$ajaxGet}';
 let ajaxGetAll = '{$ajaxGetAll}';
 let ajaxSet = '{$ajaxSet}';
-let bsdialog; //BsDialog instance
-let bt_page_id_show, bt_page_edit; //Buttons for show page meta and for edit it
-let in_page_id_show; //Input field for page_id 
-let mte_cb_noindex, mte_cb_nofollow, mte_cb_noarchive,mte_cb_nosnippet;
-let mte_cb_indexifembedded, mte_maxsnippet, mte_sel_maximagepreview, mte_maxvideopreview;
-let mte_cb_notranslate, mte_cb_noimageindex, mte_cb_unavailableafter, mte_input_unavailableafter;
-let msg_ask_edit;
-let page; //Page class instance
-let main_page_id; //page_id value
-
-
 
 document.addEventListener('DOMContentLoaded',function(){
     //Request for retrieving meta tags from plugin MySQL table

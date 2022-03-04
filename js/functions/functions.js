@@ -1,21 +1,3 @@
-let arrLabels = {
-    "page_id" : "ID della pagina",
-    "canonical_url" : "URL canonico",
-    "title" : "Titolo della pagina",
-    "meta_description" : "Descrizione meta",
-    "robots" : "Robots"
-};
-let arrValues;
-let container;
-let divLabel, divRow, divValue;
-let func_dialog,func_msg, func_nobtn;
-let func_okbtn, func_yesbtn,func_page;
-let headers,method,mh;
-let params,pagesList,response;
-let spinner;
-let textLabel, textValue;
-
-
 //display the values of Page object 
 function displayPageValues(page){
     container = document.getElementById('mte_page_values');
@@ -95,22 +77,19 @@ function editPageMetaTags(page,url,getAllUrl,deleteUrl){
                 func_msg.parseText();
                 //console.log(func_msg.message);
                 //Show dialog that print the message
-                func_dialog = new BsDialog('Modifica meta tag',func_msg.message,BsDialog.DLGTYPE_OK);
+                func_dialog = new BsDialog(title_editMetaTags,func_msg.message,BsDialog.DLGTYPE_OK);
                 func_dialog.setDialog();
                 func_dialog.showDialog();
                 //events on dialog buttons click
-                if(func_dialog.type == BsDialog.DLGTYPE_OK){
-                    //func_okbtn = document.querySelector('.mte_okbutton');
-                    func_dialog.btOk.onclick = function (){
-                        //Close dialog and remove it
-                        func_dialog.instance.dispose();
-                        document.body.removeChild(func_dialog.divDialog);
-                        if(func_msg.done == true){
-                            //Update the pages list from database
-                            getAllPages(getAllUrl,deleteUrl);
-                        }
-                    };
-                }
+                func_dialog.btOk.onclick = function (){
+                    //Close dialog and remove it
+                    func_dialog.instance.dispose();
+                    document.body.removeChild(func_dialog.divDialog);
+                    if(func_msg.done == true){
+                        //Update the pages list from database
+                        getAllPages(getAllUrl,deleteUrl);
+                    }
+                };    
             })//mh.response.then(result => {
             .catch(error => {
                 console.warn(error);
@@ -120,6 +99,16 @@ function editPageMetaTags(page,url,getAllUrl,deleteUrl){
             });//response.then(result => {
         }//if(mh.response != null){
     }//if(page.notEmpty()){
+    else{
+        func_dialog = new BsDialog(title_editMetaTags,page.error,BsDialog.DLGTYPE_OK);
+        func_dialog.setDialog();
+        func_dialog.showDialog();
+        func_dialog.btOk.onclick = function (){
+            //Close dialog and remove it
+            func_dialog.instance.dispose();
+            document.body.removeChild(func_dialog.divDialog);
+        };
+    }//else di if(page.notEmpty())
 }
 
 //get meta tags edited by this plugin from all pages 
@@ -169,23 +158,28 @@ function getPageMetaTags(page_id,url){
                 displayPageValues(page);
             }
             else{
+                let msg = '';
                 if(page.errno == Page.ERR_FROMSERVER){
                     //Display error message in Bootstrap dialog
                     func_msg = new Message(result);
                     func_msg.parseText();
-                    if(func_msg.errno == 0){
+                    if(func_msg.errno == 0)
                         //Json structure and content is ok
-                        func_dialog = new BsDialog('Richiesta meta tag pagina',func_msg.message,BsDialog.DLGTYPE_OK);
-                        func_dialog.setDialog();
-                        func_dialog.showDialog();
-                        func_dialog.btOk.onclick = function (){
-                            //Close dialog and remove it
-                            func_dialog.instance.dispose();
-                            document.body.removeChild(func_dialog.divDialog);
-                        }
-                    }//if(func_msg.errno == 0){
-                }
-            }
+                        msg = func_msg.message;
+                    else
+                        msg = func_msg.error;
+                }//if(page.errno == Page.ERR_FROMSERVER){
+                else
+                    msg = page.error;      
+                func_dialog = new BsDialog(title_getMetaTagsPage,msg,BsDialog.DLGTYPE_OK);
+                func_dialog.setDialog();
+                func_dialog.showDialog();
+                func_dialog.btOk.onclick = function (){
+                    //Close dialog and remove it
+                    func_dialog.instance.dispose();
+                    document.body.removeChild(func_dialog.divDialog);
+                };
+            }//else di if(pageParsed){
         })//response.then(result => {
         .catch(error => {
             console.warn(error);

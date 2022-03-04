@@ -1,17 +1,3 @@
-
-
-const labels = {
-    'canonical_url' : 'URL canonico',
-    'title' : 'Titolo',
-    'meta_description' : 'Meta description',
-    'robots' : 'Robots'
-};
-let mte_btn_delete;
-let f2_bsdialog;
-let f2_headers,f2_method, f2_mh, f2_msg_ask_delete;
-let f2_pageslistDiv, f2_params, f2_del_spinner;
-let index;
-
 //delete specific meta tags page selecting his page id
 function deleteMetaTagsPage(page_id,url,getAllUrl){
     f2_method = 'POST';
@@ -31,7 +17,7 @@ function deleteMetaTagsPage(page_id,url,getAllUrl){
             func_msg.parseText();
             //console.log(func_msg.message);
             //Show dialog that print the message
-            func_dialog = new BsDialog('Elimina meta tag',func_msg.message,BsDialog.DLGTYPE_OK);
+            func_dialog = new BsDialog(title_deleteMetaTags,func_msg.message,BsDialog.DLGTYPE_OK);
             func_dialog.setDialog();
             func_dialog.showDialog();
             //events on dialog buttons click
@@ -137,7 +123,7 @@ function displayAllPagesEdited(pageList,deleteUrl,getAllUrl){
         if(mte_btn_delete){
             mte_btn_delete.onclick = function(){
                 f2_msg_ask_delete = 'Sei sicuro di voler cancellare i meta tag della pagina modificati?';
-                f2_bsdialog = new BsDialog('Elimina meta tag',f2_msg_ask_delete,BsDialog.DLGTYPE_YESNO);
+                f2_bsdialog = new BsDialog(title_deleteMetaTags,f2_msg_ask_delete,BsDialog.DLGTYPE_YESNO);
                 f2_bsdialog.setDialog();
                 f2_bsdialog.showDialog();
                 //Bootstrap dialog click events
