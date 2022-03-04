@@ -7,6 +7,10 @@ class Page{
     static ERR_VALUESEMPTY = 3;
     static ERR_FROMSERVER = 4;
 
+    static MSG_JSONERROR = "Sintassi JSON errata";
+    static MSG_PROPERTYMISSING = "Proprietà richiesta mancante";
+    static MSG_VALUESEMPTY = "Uno o più proprietà hanno un valore non valido";
+
     _id;
     _page_id;
     _canonical_url;
@@ -24,17 +28,33 @@ class Page{
         this._meta_description = meta_description;
         this._robots = robots; // array
         this._errno = 0;
-        this._error = '';
+        this._error = null;
     }
 
     get id(){return this._id;}
     get canonical_url(){return this._canonical_url;}
+    get meta_description(){return this._meta_description;}
     get page_id(){return this._page_id;}
     get title(){return this._title;}
-    get meta_description(){return this._meta_description;}
     get robots(){return this._robots;}
     get errno(){return this._errno;}
-    get error(){return this._error;}
+    get error(){
+        switch(this._errno){
+            case Page.ERR_JSONERROR:
+                this._error = Page.MSG_JSONERROR;
+                break;
+            case Page.ERR_PROPERTYMISSING:
+                this._error = Page.MSG_PROPERTYMISSING;
+                break;
+            case Page.ERR_VALUESEMPTY:
+                this._error = Page.MSG_VALUESEMPTY;
+                break;
+            default:
+                this._error = null;
+                break;
+        }
+        return this._error;
+    }
 
     set id(id){this._id = id;}
     set canonical_url(canonical_url){this._canonical_url = canonical_url;}
