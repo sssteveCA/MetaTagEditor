@@ -119,7 +119,7 @@ add_action('wp','mte_load_table');
 function mte_load_table(){
     //global $mmt;
     global $found,$mmt,$pageFound,$pages,$post;
-    if(is_admin() || is_page() || is_single()){
+    if(is_page() || is_single()){
         //If current link is of a page or a article
         //file_put_contents(C::LOG_FILE,"post => ".var_export($post,true)."\r\n",FILE_APPEND);
         try{
@@ -158,7 +158,7 @@ function mte_load_table(){
 add_filter('wpseo_canonical','mte_edit_canonical');
 function mte_edit_canonical($canonical){
     global $found, $pageFound;
-    if(is_admin() || is_page() || is_single()){
+    if(is_page() || is_single()){
         //If current link is of admin backend, a page or a article
         file_put_contents(C::LOG_FILE,"mte_edit_canonical\r\n",FILE_APPEND);
         //file_put_contents(C::LOG_FILE,"Canonical => {$canonical}\r\n",FILE_APPEND);
@@ -171,7 +171,7 @@ function mte_edit_canonical($canonical){
 add_filter('wpseo_metadesc','mte_edit_description');
 function mte_edit_description($description){
     global $found, $pageFound;
-    if(is_admin() || is_page() || is_single()){
+    if(is_page() || is_single()){
         //If current link is of admin backend, a page or a article
         file_put_contents(C::LOG_FILE,"mte_edit_description\r\n",FILE_APPEND);
         //file_put_contents(C::LOG_FILE,"Descrizione => {$description}\r\n",FILE_APPEND);
@@ -184,7 +184,7 @@ function mte_edit_description($description){
 add_filter('wpseo_robots','mte_edit_robots');
 function mte_edit_robots($robots){
     global $found, $pageFound;
-    if(is_admin() || is_page() || is_single()){
+    if(is_page() || is_single()){
         //If current link is of admin backend, a page or a article
         file_put_contents(C::LOG_FILE,"mte_edit_robots\r\n",FILE_APPEND);
         //file_put_contents(C::LOG_FILE,"Robots => {$robots}\r\n",FILE_APPEND);
@@ -197,7 +197,7 @@ function mte_edit_robots($robots){
 add_filter('wpseo_title','mte_edit_title');
 function mte_edit_title($title){
     global $found, $pageFound;
-    if(is_admin() || is_page() || is_single()){
+    if(is_page() || is_single()){
         //If current link is of admin backend, a page or a article
         file_put_contents(C::LOG_FILE,"mte_edit_title\r\n",FILE_APPEND);
         //file_put_contents(C::LOG_FILE,"Titolo => {$title}\r\n",FILE_APPEND);
