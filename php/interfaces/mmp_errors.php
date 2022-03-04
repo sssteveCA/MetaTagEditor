@@ -15,6 +15,7 @@ interface MmpErrors{
     const ERR_ROBOTS_NOTMATCH = 8; //robots doesn't match with regular expression
     const ERR_QUERYERROR = 9; //SQL syntax error
     const ERR_NOROWSAFFECTED = 10; //No rows affected in last query
+    const ERR_PAGEIDNOTEXISTS = 11; //No page found with page_id passed
 
     //messages
     const MSG_MISSEDREQPARAMS = "Uno o più parametri richiesti sono mancanti";
@@ -28,5 +29,6 @@ interface MmpErrors{
     const MSG_ROBOTS_NOTMATCH = "Le meta direttive robots non sono in un formato non valido";
     const MSG_QUERYERROR = "La query inviata non è corretta";
     const MSG_NOROWSAFFECTED = "Nessuna modifica alla tabella eseguita";
+    const MSG_PAGEIDNOTEXISTS = "Nessuna pagina trovata con questo ID";
 }
 ?>

@@ -75,11 +75,11 @@ function editPageMetaTags(page,url,getAllUrl,deleteUrl){
             'meta_description' : page.meta_description,
             'robots' : page.robots
         };
-        console.log("editPageMetaTags params");
-        console.log(params);
+        /* console.log("editPageMetaTags params");
+        console.log(params); */
         params = JSON.stringify(params);
-        console.log("editPageMetaTags params stringify");
-        console.log(params);
+        /* console.log("editPageMetaTags params stringify");
+        console.log(params); */
         //params = "page_id="+page.page_id+"&canonical_url="+page.canonical_url+"&title="+page.title+"&meta_description="+page.meta_description+"&robots="+page.robots;
         mh = new MyHttp(url,method,headers,params);
         //display spinner while waiting the response
@@ -89,11 +89,11 @@ function editPageMetaTags(page,url,getAllUrl,deleteUrl){
         response = mh.getResponse();
         if(mh.response != null){
             mh.response.then(result => {
-                console.log(result);
+                //console.log(result);
                 //get the message in JSON string
                 func_msg = new Message(result);
                 func_msg.parseText();
-                console.log(func_msg.message);
+                //console.log(func_msg.message);
                 //Show dialog that print the message
                 func_dialog = new BsDialog('Modifica meta tag',func_msg.message,BsDialog.DLGTYPE_OK);
                 func_dialog.setDialog();
@@ -102,7 +102,6 @@ function editPageMetaTags(page,url,getAllUrl,deleteUrl){
                 if(func_dialog.type == BsDialog.DLGTYPE_OK){
                     //func_okbtn = document.querySelector('.mte_okbutton');
                     func_dialog.btOk.onclick = function (){
-                        console.log("OnClick OK");
                         //Close dialog and remove it
                         func_dialog.instance.dispose();
                         document.body.removeChild(func_dialog.divDialog);
@@ -162,15 +161,31 @@ function getPageMetaTags(page_id,url){
     if(mh.response != null){
         mh.response.then(result => {
             //get response from ajaxUrl
-            console.log(result);
+            //console.log(result);
             page = new Page();
             var pageParsed = page.parseJsonString(result); //parse JSON string and set properties values
             if(pageParsed){
                 //JSON string parsed successufly
                 displayPageValues(page);
             }
-            else
-                console.log("errore => "+page.errno)
+            else{
+                if(page.errno == Page.ERR_FROMSERVER){
+                    //Display error message in Bootstrap dialog
+                    func_msg = new Message(result);
+                    func_msg.parseText();
+                    if(func_msg.errno == 0){
+                        //Json structure and content is ok
+                        func_dialog = new BsDialog('Richiesta meta tag pagina',func_msg.message,BsDialog.DLGTYPE_OK);
+                        func_dialog.setDialog();
+                        func_dialog.showDialog();
+                        func_dialog.btOk.onclick = function (){
+                            //Close dialog and remove it
+                            func_dialog.instance.dispose();
+                            document.body.removeChild(func_dialog.divDialog);
+                        }
+                    }//if(func_msg.errno == 0){
+                }
+            }
         })//response.then(result => {
         .catch(error => {
             console.warn(error);

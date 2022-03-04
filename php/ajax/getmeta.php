@@ -1,10 +1,12 @@
 <?php
 
 require_once("../../../../../wp-load.php");
+require_once("../interfaces/constants.php");
 require_once("../interfaces/messages.php");
 require_once("../interfaces/mmp_errors.php");
 require_once("../models/mymetapage.php");
 
+use MetaTagEditor\Interfaces\Constants as C;
 use MetaTagEditor\Interfaces\Messages as M;
 use MetaTagEditor\Models\MyMetaPage;
 

@@ -85,6 +85,9 @@ class MyMetaPage implements Mmp, C{
             case Mmp::ERR_NOROWSAFFECTED:
                 $this->error = Mmp::MSG_NOROWSAFFECTED;
                 break;
+            case Mmp::ERR_PAGEIDNOTEXISTS:
+                $this->error = Mmp::MSG_PAGEIDNOTEXISTS;
+                break;
             default:
                 $this->error = null;
                 break;
@@ -245,25 +248,32 @@ SQL;
     public function getMetaByUrlFromYoast(){
         $ok = false;
         $this->errno = false;
-        if(isset($this->canonical_url)){
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, get_home_url().C::YOAST_RESTAPI_URL.$this->canonical_url);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
-            curl_setopt($ch,CURLOPT_TIMEOUT, 20);
-            curl_setopt($ch,CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch,CURLOPT_MAXREDIRS,10);
-            $result = curl_exec($ch);
-            curl_close($ch);
-            $json = json_decode($result,true,100,JSON_THROW_ON_ERROR);
-            //file_put_contents(C::LOG_FILE,"\r\n\r\n".var_export($json["json"],true)."\r\n",FILE_APPEND);
-            $this->robots = implode(",",$json["json"]["robots"]);
-            $this->meta_description = $json["json"]["og_description"];
-            $this->title = $json["json"]["og_title"];
-            $ok = true;
-        }//if(isset($this->canonical_url)){
+        if(isset($this->page_id,$this->canonical_url)){
+            //check if post exists by id
+            $status = get_post_status($this->page_id);
+            if($status !== false){
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, get_home_url().C::YOAST_RESTAPI_URL.$this->canonical_url);
+                curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+                curl_setopt($ch,CURLOPT_TIMEOUT, 20);
+                curl_setopt($ch,CURLOPT_FOLLOWLOCATION, true);
+                curl_setopt($ch,CURLOPT_MAXREDIRS,10);
+                $result = curl_exec($ch);
+                curl_close($ch);
+                $json = json_decode($result,true,100,JSON_THROW_ON_ERROR);
+                //file_put_contents(C::LOG_FILE,"\r\n\r\n".var_export($json["json"],true)."\r\n",FILE_APPEND);
+                $this->robots = implode(",",$json["json"]["robots"]);
+                $this->meta_description = $json["json"]["og_description"];
+                $this->title = $json["json"]["og_title"];
+                $ok = true;
+            }//if(get_post_status($this->page_id) !== false){
+            else
+                $this->errno = Mmp::ERR_PAGEIDNOTEXISTS;
+        }//if(isset($this->page_id,$this->canonical_url)){
         else
             $this->errno = Mmp::ERR_MISSEDREQPARAMS;
+        file_put_contents(C::LOG_FILE,"ok => {$ok}\r\n",FILE_APPEND);
         return $ok;
     }
 

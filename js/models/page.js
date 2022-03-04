@@ -5,6 +5,7 @@ class Page{
     static ERR_JSONERROR = 1;
     static ERR_PROPERTYMISSING = 2;
     static ERR_VALUESEMPTY = 3;
+    static ERR_FROMSERVER = 4;
 
     _id;
     _page_id;
@@ -13,6 +14,7 @@ class Page{
     _meta_description;
     _robots;
     _errno;
+    _error;
 
     constructor(id = 0, page_id = 0, canonical_url = '',title = '', meta_description = '', robots = ''){
         this._id = id;
@@ -22,6 +24,7 @@ class Page{
         this._meta_description = meta_description;
         this._robots = robots; // array
         this._errno = 0;
+        this._error = '';
     }
 
     get id(){return this._id;}
@@ -31,6 +34,7 @@ class Page{
     get meta_description(){return this._meta_description;}
     get robots(){return this._robots;}
     get errno(){return this._errno;}
+    get error(){return this._error;}
 
     set id(id){this._id = id;}
     set canonical_url(canonical_url){this._canonical_url = canonical_url;}
@@ -56,25 +60,31 @@ class Page{
         this._errno = 0;
         try{
             var jsonObj = JSON.parse(jsonStr);
-            if(jsonObj.hasOwnProperty("page")){
-                var jsonObjPage = jsonObj["page"];
-                if(!jsonObjPage.hasOwnProperty("page_id"))parsed = false;
-                if(!jsonObjPage.hasOwnProperty("canonical_url"))parsed = false;
-                if(!jsonObjPage.hasOwnProperty("title"))parsed = false;
-                if(!jsonObjPage.hasOwnProperty("meta_description"))parsed = false;
-                if(!jsonObjPage.hasOwnProperty("robots"))parsed = false;
-                if(parsed){
-                    this._page_id = jsonObjPage["page_id"];
-                    this._canonical_url = jsonObjPage["canonical_url"];
-                    this._title = jsonObjPage["title"];
-                    this._meta_description = jsonObjPage["meta_description"];
-                    this._robots = jsonObjPage["robots"];
-                }
-                else{
-                    //missed all properties required
-                    this._errno = Page.ERR_PROPERTYMISSING;
-                }
-            }//if(jsonObj.hasOwnProperty("page")){
+            if(jsonObj.hasOwnProperty("done") && jsonObj["done"] == true){
+                if(jsonObj.hasOwnProperty("page")){
+                    var jsonObjPage = jsonObj["page"];
+                    if(!jsonObjPage.hasOwnProperty("page_id"))parsed = false;
+                    if(!jsonObjPage.hasOwnProperty("canonical_url"))parsed = false;
+                    if(!jsonObjPage.hasOwnProperty("title"))parsed = false;
+                    if(!jsonObjPage.hasOwnProperty("meta_description"))parsed = false;
+                    if(!jsonObjPage.hasOwnProperty("robots"))parsed = false;
+                    if(parsed){
+                        this._page_id = jsonObjPage["page_id"];
+                        this._canonical_url = jsonObjPage["canonical_url"];
+                        this._title = jsonObjPage["title"];
+                        this._meta_description = jsonObjPage["meta_description"];
+                        this._robots = jsonObjPage["robots"];
+                    }
+                    else{
+                        //missed all properties required
+                        this._errno = Page.ERR_PROPERTYMISSING;
+                    }
+                }//if(jsonObj.hasOwnProperty("page")){
+            }//if(jsonObj.hasOwnProperty("done") && jsonObj["done"] == true){
+            else{
+                parsed = false;
+                this._errno = Page.ERR_FROMSERVER;
+            }
         }catch(e){
             parsed = false;
             console.warn(e);

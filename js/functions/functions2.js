@@ -24,12 +24,12 @@ function deleteMetaTagsPage(page_id,url,getAllUrl){
     f2_mh.getResponse();
     if(f2_mh.response != null){
         f2_mh.response.then(result => {
-            console.log(result);
+            //console.log(result);
             getAllPages(getAllUrl,url);
             //get the message in JSON string
             func_msg = new Message(result);
             func_msg.parseText();
-            console.log(func_msg.message);
+            //console.log(func_msg.message);
             //Show dialog that print the message
             func_dialog = new BsDialog('Elimina meta tag',func_msg.message,BsDialog.DLGTYPE_OK);
             func_dialog.setDialog();
